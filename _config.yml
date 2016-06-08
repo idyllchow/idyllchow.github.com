@@ -24,16 +24,16 @@ menu:
     url: '/theme-setup/'
   - title: '八月十三'
     url: '/tags'
-  - title: 'Categories'
-    url: '/categories'
-    type: 'categories'
-  - title: 'Favorites'
+  #- title: 'Categories'
+  #  url: '/categories'
+  #  type: 'categories'
+  - title: '关于'
     url: '#'
     submenu:
-      - title: 'Code Highlighter'
-        url: '/intro/code-highlighting-post/'
-      - title: 'Sample Post'
-        url: '/intro/sample-post/'
+      #- title: 'Code Highlighter'
+      #  url: '/intro/code-highlighting-post/'
+      #- title: 'Sample Post'
+      #  url: '/intro/sample-post/'
 
 # Owner/author information
 owner:
