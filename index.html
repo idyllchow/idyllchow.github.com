@@ -1,9 +1,10 @@
 ---
 layout: post-index
-title: "万卷古今消永日，一窗昏晓送流年"
+title: ""
 description: "Describe this nonsense."
 tags: [Jekyll, theme, themes, responsive, blog, modern]
 comments: false
+date: 2016-06-08
 ---
 
 {% for post in paginator.posts %}
@@ -32,6 +33,8 @@ comments: false
     <h1 class="entry-title"><a href="{{ site.url }}{{ post.url }}" rel="bookmark" title="{{ post.title }}" itemprop="url">{{ post.title }}</a></h1>
     {% endif %}
   </header>
+  <li>
+  </li>
   <div class="entry-content">
     {% if post.content contains "<!-- more -->" %}
     {{ post.content | split:"<!-- more -->" | first % }}
