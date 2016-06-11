@@ -22,6 +22,7 @@ menu:
     url: '/dev'
   - title: '八月十三'
     url: '/notes'
+    type: 'notes'
 #  - title: 'Tags'
 #    url: '/tags'
 #  - title: 'Categories'
