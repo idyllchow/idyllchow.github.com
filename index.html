@@ -1,10 +1,9 @@
 ---
 layout: post-index
-title: ""
+title: "Welcome to the IdyllChow Blog"
 description: "Describe this nonsense."
 tags: [Jekyll, theme, themes, responsive, blog, modern]
 comments: false
-date: 2016-06-08
 ---
 
 {% for post in paginator.posts %}
@@ -30,14 +29,15 @@ date: 2016-06-08
     {% if post.link %}
       <h1 class="entry-title"><a href="{{ site.url }}{{ post.url }}" class="permalink" rel="bookmark" title="{{ post.title }}"><i class="fa fa-bookmark"></i></a> <a href="{{ post.link }}">{{ post.title }}</a></h1>
     {% else %}
-    <h1 class="entry-title"><a href="{{ site.url }}{{ post.url }}" rel="bookmark" title="{{ post.title }}" itemprop="url">{{ post.title }}</a></h1>
+      <h1 class="entry-title"><a href="{{ site.url }}{{ post.url }}" rel="bookmark" title="{{ post.title }}" itemprop="url">{{ post.title }}</a></h1>
     {% endif %}
   </header>
-  <li>
-  </li>
   <div class="entry-content">
     {% if post.content contains "<!-- more -->" %}
-    {{ post.content | split:"<!-- more -->" | first % }}
+        {{ post.content | split:"<!-- more -->" | first % }}
+        <div align="center">
+            <div markdown="0"><a href="{{ site.url }}{{ post.url }}" class="btn btn-info">Continue Reading ...</a></div>
+        </div>
     {% else %}
       {{ post.content }}
     {% endif %}

@@ -1,7 +1,7 @@
 title:            相逢莫问
-description:      瞎搞的人生
+description:      万卷古今消永日，一窗昏晓送流年
 # put your disqus here
-disqus_shortname: 
+disqus_shortname:  
 reading_time:     true # if true, shows the estimated reading time for a post
 words_per_minute: 200
 logo:             images/logo.png # logo visible in the topbar
@@ -20,20 +20,20 @@ menu:
     url: '/'
   - title: '开发之路'
     url: '/dev'
-  #- title: '渔舟唱晚'
-  #  url: '/theme-setup/'
   - title: '八月十三'
-    url: '/tags'
-  #- title: 'Categories'
-  #  url: '/categories'
-  #  type: 'categories'
-  - title: '关于'
-    url: '#'
-    submenu:
-      #- title: 'Code Highlighter'
-      #  url: '/intro/code-highlighting-post/'
-      #- title: 'Sample Post'
-      #  url: '/intro/sample-post/'
+    url: '/notes'
+#  - title: 'Tags'
+#    url: '/tags'
+#  - title: 'Categories'
+#    url: '/categories'
+#    type: 'categories'
+#  - title: 'Favorites'
+#    url: '#'
+#    submenu:
+#      - title: 'Code Highlighter'
+#        url: '/intro/code-highlighting-post/'
+#      - title: 'Sample Post'
+#        url: '/intro/sample-post/'
 
 # Owner/author information
 owner:
@@ -41,7 +41,7 @@ owner:
   site:           http://zhoushibo.com
   avatar:         images/avatar.jpg
   bio:            "Your bio goes here. It shouldn't be super long but a good two sentences or two should suffice."
-  email:          idyllzhou@gmail.com
+  email:          idyllchow@gmail.com
   # Twitter nick for use in Twitter cards and follow button.
   twitter: idyllchow # if no twitter in this config, the twitter follow button will be removed
   # GitHub nick for use in follow button in author block.
@@ -58,7 +58,7 @@ social:
   - title: "linkedin"
     url: "https://br.linkedin.com/in/idyllchow"
   - title: "youtube"
-    url: "https://www.youtube.com/channel/UCfnSek-9HPWOx5e2pH7VFgg"
+    url: "https://www.youtube.com/channel/XXXXX"
 # Background image to be tiled on all pages
 background:
 
@@ -69,7 +69,7 @@ google_verify:
 bing_verify:
 
 # http://en.wikipedia.org/wiki/List_of_tz_database_time_zones
-timezone:    China/Guangzhou
+timezone:    China/GuangZhou
 locale:      cn
 future:      true
 highlighter: rouge
