@@ -4,7 +4,7 @@ title: 岛上书店
 description: ""
 modified: 2016-06-11
 tags: [notes]
-notes: [intro]
+notes: [read]
 type: notes
 ---
 
@@ -13,3 +13,5 @@ type: notes
 不故作高深却又暗藏玄机，自然地融入些许紧扣主题的悬疑使小说布局格外精彩。
 
 庆幸在人生中这个阶段读了它，值得在石村熬夜的一本书。
+
+16/6/11墨碟

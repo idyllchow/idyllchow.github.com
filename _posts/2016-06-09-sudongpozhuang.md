@@ -2,7 +2,8 @@
 layout: post
 title: "苏东坡传"
 description: ""
-tags: [苏东坡]  
+tags: [苏东坡]
+notes: [read]  
 type: notes
 ---
 
