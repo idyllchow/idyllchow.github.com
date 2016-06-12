@@ -41,7 +41,7 @@ owner:
   name:           IdyllChow
   site:           http://zhoushibo.com
   avatar:         images/avatar.jpg
-  bio:            "Your bio goes here. It shouldn't be super long but a good two sentences or two should suffice."
+  bio:            "这完全是在瞎搞嘛"
   email:          idyllchow@gmail.com
   # Twitter nick for use in Twitter cards and follow button.
   twitter: idyllchow # if no twitter in this config, the twitter follow button will be removed
