@@ -1,7 +1,7 @@
 title:            相逢莫问
 description:      万卷古今消永日，一窗昏晓送流年
 # put your disqus here
-disqus_shortname:  
+disqus_shortname: idyllchow 
 reading_time:     true # if true, shows the estimated reading time for a post
 words_per_minute: 200
 logo:             images/logo.png # logo visible in the topbar
