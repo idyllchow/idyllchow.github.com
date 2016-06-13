@@ -195,7 +195,7 @@ menu_drawer.xml
     
 效果如下：
 
-![Smithsonian Image]({{ site.url }}/images/device-2016-06-13-161319.png)
+![Smithsonian Image]({{ site.url }}/images/device-2016-06-13-172747.png)
 
 	
    
