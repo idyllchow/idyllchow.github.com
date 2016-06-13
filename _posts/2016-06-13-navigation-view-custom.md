@@ -1,10 +1,18 @@
-
+---
+layout: post
+title: NavigationView实现抽屉效果及视图定制
+description: "NavigationView添加底部视图"
+modified: 2016-06-13
+tags: [dev]
+notes: [dev]
+type: dev
+---
 Android design包提供了NavigationView可配合DrawerLayout方便地实现灵活的抽屉效果，NavigationView免除了自定义视图的繁琐。
 
 ![Smithsonian Image]({{ site.url }}/images/patterns_navdrawer_settings1.png)
 {: .image-right}
 
-要实现这样的效果，只需在NavigationView xml文件中加入app:headerLayout和app:menu即可，headerLayout的定义如同普通的布局文件，menu由对应的item构成，每个item可以添加子item实现分类，item也可以被group包含实现分组。xml文件如下：
+要实现[Material Design](https://material.google.com/patterns/navigation-drawer.html#)中类似这样的效果，只需在NavigationView xml文件中加入app:headerLayout和app:menu即可，headerLayout的定义如同普通的布局文件，menu由对应的item构成，每个item可以添加子item实现分类，item也可以被group包含实现分组。xml文件如下：
 
 act_drawer.xml
 
@@ -126,17 +134,31 @@ menu_drawer.xml
             setupDrawerContent(navigationView);
         }
         
-    	/**
-          * navigationView item选中监听
-          * @param navigationView
-           */     
-           private void setupDrawerContent(NavigationView navigationView) {         navigationView.setNavigationItemSelectedListener(                 new NavigationView.OnNavigationItemSelectedListener() {                     @Override                     public boolean onNavigationItemSelected(MenuItem menuItem) {                         switch (menuItem.getItemId()) {
-            case R.id.menu_drawer_history:      //处理跳转 
-               break;     
-            case R.id.menu_drawer_cruyff:                                 	         break;                             
-            case R.id.menu_drawer_setting:                                            break;                             
-            default:
-              break;                         }                         mDrawerLayout.closeDrawers();                         return true;                     }                 });     }	
+    /**
+     * navigationView item选中监听
+     * @param navigationView
+     */
+    private void setupDrawerContent(NavigationView navigationView) { 
+        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(MenuItem item) {
+                switch (item.getItemId()) {
+                       case R.id.menu_drawer_history: 
+                        //处理跳转 
+                         break; 
+                      case R.id.menu_drawer_cruyff:
+                          break; 
+                      case R.id.menu_drawer_setting:
+                          break; 
+                      default:
+                        break;
+                     }
+                 mDrawerLayout.closeDrawers(); 
+                return true; 
+            }
+        });
+    }
+           	
 	     
 	     
 但有时需要在NavigationView中显示其它信息(比如在底部横向居中出显示app版本号)怎么实现呢，可以用两个(原则上可以更多)NavigationView来实现，也就是抽屉界面顶部为header，下部由两个NavigationView构成，一个NavigationView完成item布局，一个NavigationView实现底部其余视图的布局，在底部的NavigationView中我们可以用headerLayout实现我们想要的视图，xml如下：
@@ -169,6 +191,8 @@ menu_drawer.xml
             app:headerLayout="@layout/footer_drawer" />
 
     </android.support.design.widget.NavigationView>
+    
+    
 效果如下：
 
 ![Smithsonian Image]({{ site.url }}/images/device-2016-06-13-161319.png)
