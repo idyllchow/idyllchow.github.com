@@ -4,7 +4,7 @@ title: NavigationView实现抽屉效果及视图定制
 description: "NavigationView添加底部视图"
 modified: 2016-06-13
 tags: [dev]
-categories: [dev, Android]
+categories: [android]
 type: dev
 ---
 Android design包提供了NavigationView可配合DrawerLayout方便地实现灵活的抽屉效果，NavigationView免除了自定义视图的繁琐。
