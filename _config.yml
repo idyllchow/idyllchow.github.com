@@ -25,9 +25,9 @@ menu:
     type: 'notes'
 #  - title: 'Tags'
 #    url: '/tags'
-#  - title: 'Categories'
-#    url: '/categories'
-#    type: 'categories'
+  - title: 'Categories'
+    url: '/categories'
+    type: 'categories'
 #  - title: 'Favorites'
 #    url: '#'
 #    submenu:
@@ -82,8 +82,7 @@ sass:
   style: compressed
 
 # https://github.com/mojombo/jekyll/wiki/Permalinks
-#permalink:   /:categories/:title/
-permalink:   /:notes/:title/
+permalink:   /:categories/:title/
 
 # Amount of post to show on home page
 paginate: 5
