@@ -2,8 +2,7 @@
  layout: post
  title: "欧洲杯观感"
  description: ""
- tags: [足球,比赛]
- notes: [soccer]
+ tags: [notes]
  type: notes
 ---
 

@@ -3,7 +3,6 @@ layout: post
 title: NavigationView实现抽屉效果及视图定制
 description: "NavigationView添加底部视图"
 modified: 2016-06-13
-tags: [dev]
 categories: [android]
 type: dev
 ---

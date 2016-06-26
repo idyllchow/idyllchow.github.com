@@ -3,8 +3,7 @@ layout: post
 title: 岛上书店
 description: ""
 modified: 2016-06-11
-tags: [notes]
-notes: [read]
+tags: [read]
 type: notes
 ---
 
