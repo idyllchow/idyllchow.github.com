@@ -39,7 +39,7 @@ owner:
   name:           IdyllChow
   site:           http://zhoushibo.com
   avatar:         images/avatar.jpg
-  bio:            "这完全是在瞎搞嘛"
+  bio:            "这个人很懒，什么都没留下"
   email:          idyllchow@gmail.com
   # Twitter nick for use in Twitter cards and follow button.
   twitter: idyllchow # if no twitter in this config, the twitter follow button will be removed

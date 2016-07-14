@@ -14,9 +14,13 @@ type: dev
 <!-- more -->
 
 Post content after ``<!-- more -->`` tag.
+
 观察者模式提及的两个核心概念是主题「Subject」和观察者「Observer」,如同订阅报纸，主题「出版者」的任务是发行报纸，观察者「订阅者」需要的是报纸有更新时第一时间收到新的报纸，当观察者「订阅者」退订报纸后，就不再接收到新的报纸。主题「出版者」只有一个，而观察者「订阅者」可有多个。
 
+具体实现
+
 观察者接口
+
 public interface Observer {
     /**
      * 比赛状态改变时,主题会把当前进程状态值当作方法参数,传送给观察者
@@ -25,6 +29,7 @@ public interface Observer {
 }
 
 被观察者接口，这里我们用Subject命名
+
 public interface Subject {
     /**
      * 注册观察者
@@ -52,25 +57,25 @@ public interface IDisplayElement {
 
 具体被观察者类，其中用ArrayList存放观察者，event即具体的事件对象，每一次产生事件，通过set方法传进来
 
-public class EventDataImpl implements Subject {
-    //存放观察者对象
-    private ArrayList observers;
-    private Event event;
+    public class EventDataImpl implements Subject {
+        //存放观察者对象
+        private ArrayList observers;
+        private Event event;
 
-    public EventData() {
-        observers = new ArrayList();
-    }
-
-    @Override
-    public void registerObserver(Observer o) {
-        if (o == null) {
-            throw new IllegalArgumentException("The observer is null.");
+        public EventData() {
+            observers = new ArrayList();
         }
-        //需要注册时添加
-        observers.add(o);
-    }
 
-    @Override
+       	@Override
+        public void registerObserver(Observer o) {
+            if (o == null) {
+                throw new IllegalArgumentException("The observer is null.");
+            }
+            //需要注册时添加
+            observers.add(o);
+        }
+
+        @Override
     public void removeObserver(Observer o) {
         if (o == null) {
             throw new IllegalArgumentException("The observer is null.");
