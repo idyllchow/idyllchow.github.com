@@ -8,7 +8,7 @@ type: dev
 ---
 
 Android的GUI系统由C语言框架和Java语言框架组成，C语言层通过调用输入设备和输出设备驱动将Android的软件系统和底层硬件联系起来，Java框架层提供各种绘图接口供上层应用调用。  
-![GUI框架图]({{ site.url }}/images/android_image/android_gui.png)  
+![Smithsonian]({{ site.url }}/images/android_image/android_gui.png)  
 C语言部分包括:  
 * PixelFlinger(下层工具库);  
 * libui(GUI框架库)；  
@@ -21,8 +21,8 @@ Java框架层主要包括
 * android.view.Surface(构建显示界面);  
 * android.view.view(各种UI元素的基类);  
 * javax.microedition.khronos.opengles(标准的OpenGL接口);  
-* android.opengl(Android系统和OpenGL的联系层)  
-
+* android.opengl(Android系统和OpenGL的联系层)    
+Post content after ``<!-- more -->`` tag.  
 pixelfinger是Android中一个下层的用C语言实现的工具类库，负责像素级别的基本处理:提供像素格式定义、画点、画线、画多边线、纹理颜色填充以及多层处理等操作接口。生成目标动态库libpixelflinger.so，它只连接了Android的C语言基础库libcutils。  
 
 libui库提供GUI系统本地部分框架。此库提供了一些接口，由其它的库通过类继承方式来实现，libui提供了包括：  
