@@ -10,7 +10,6 @@ Android design包提供了NavigationView可配合DrawerLayout方便地实现灵�
 
 <!-- more -->
  
-Post content after ``<!-- more -->`` tag.
 
 ![Smithsonian Image]({{ site.url }}/images/patterns_navdrawer_settings1.png)
 {: .image-right}
