@@ -7,7 +7,8 @@ categories: [Android View]
 type: dev
 ---
 
-android.view.View类呈现最基本的UI构造块。一个View（视图）占据屏幕上的一个方形区域，是与用户交互的直接所在，负责绘制和事件处理。  ![View Image]({{ site.url }}/images/android_post/android_view.png)
+android.view.View类呈现最基本的UI构造块。一个View（视图）占据屏幕上的一个方形区域，是与用户交互的直接所在，负责绘制和事件处理。 
+![View Image]({{ site.url }}/images/android_post/android_view.png)
 {: .image-right}  
 Android中的UI元素常常在Layout中进行描述，android.view.View的其中一个重要扩展者是android.view.ViewGroup，它表示一个View的集合，其中可以包含众多子View，其本身也是一个View。View用@UiThread来注解，表明其工作在UI线程(app主线程)中，调用所有与之相关的方法应在主线程中。(android中所有的应用组件(Activities, Services, ContentProviders, BroadcastReceivers)在UI线程中被创建)，下文分别从View的位置，滑动，绘制，事件机制，自定义等几个方面加以分析，希望能有一个直观清楚的梳理。    
 
@@ -20,17 +21,17 @@ Android中的UI元素常常在Layout中进行描述，android.view.View的其中
 
 如图所示，View的位置由四个顶点决定，分别对应View的四个属性：left(左横坐标)、top(上纵坐标)、right(右横坐标)、bottom(下纵坐标)，其值分别由getLeft()、getTop()、getRight()、getBottom()获取，宽高和坐标的关系：
 
-```
-    width = right - left  
-	height = bottom - top
-```
+{% highlight yaml %}
+width = right - left  
+height = bottom - top
+{% endhighlight %}
 
 除此之外，View还有相对于父容器的几个值x(左上角横坐标), y(左上角纵坐标), translationX(View左上角相对于父容器的X方向偏移量), translationY(View左上角相对于父容器的Y方向偏移量)，对应关系为：  
 
-```
-    x = left + translationX  
-    y = top + translationY
-```
+{% highlight yaml %}
+x = left + translationX  
+y = top + translationY
+{% endhighlight %}
 
 #### View 的滑动  
 
@@ -73,7 +74,7 @@ Android中的UI元素常常在Layout中进行描述，android.view.View的其中
    }
    ```
 
-  其中，mScrollX为View内容左边缘与View左边缘在水平方向的距离，mScrollY为View内容上边缘与View上边缘在竖直方向上的距离，其取值正负如图所示。scrollBy也是调用scrollTo方法，它改变的是View内容位置而不是View本身位置。
+其中，mScrollX为View内容左边缘与View左边缘在水平方向的距离，mScrollY为View内容上边缘与View上边缘在竖直方向上的距离，其取值正负如图所示。scrollBy也是调用scrollTo方法，它改变的是View内容位置而不是View本身位置。
 
   ![View Image]({{ site.url }}/images/android_post/android_view_position.png)
   {: .image-right}
