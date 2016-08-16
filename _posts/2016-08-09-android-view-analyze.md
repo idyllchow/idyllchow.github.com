@@ -21,15 +21,15 @@ Android中的UI元素常常在Layout中进行描述，android.view.View的其中
 如图所示，View的位置由四个顶点决定，分别对应View的四个属性：left(左横坐标)、top(上纵坐标)、right(右横坐标)、bottom(下纵坐标)，其值分别由getLeft()、getTop()、getRight()、getBottom()获取，宽高和坐标的关系：
 
 ```
-width = right - left  
-height = bottom - top
+    width = right - left  
+	height = bottom - top
 ```
 
 除此之外，View还有相对于父容器的几个值x(左上角横坐标), y(左上角纵坐标), translationX(View左上角相对于父容器的X方向偏移量), translationY(View左上角相对于父容器的Y方向偏移量)，对应关系为：  
 
 ```
-x = left + translationX  
-y = top + translationY
+    x = left + translationX  
+    y = top + translationY
 ```
 
 #### View 的滑动  
@@ -99,40 +99,41 @@ y = top + translationY
 
    Scroller即弹性滑动对象，通常Scroller的用法如下：
 
-  ```
-    Scroller scroller = new Scroller(mContext);
+```
+Scroller scroller = new Scroller(mContext);
 
-    private void smoothScrollTo(int destX, int destY) {
-        int scrollX = getScrollX();
-    	int delta = destX - scrollX;
-    	scroller.startScroll(scrollX, 0, delta, 0, 1000);
-    	invalidate();
-    }
+private void smoothScrollTo(int destX, int destY) {
+    int scrollX = getScrollX();
+    int delta = destX - scrollX;
+    scroller.startScroll(scrollX, 0, delta, 0, 1000);
+    invalidate();
+}
 
-    @Override
-    public void computeScroll() {
-    	if (scroller.computeScrollOffset()) {
-            scrollTo(scroller.getCurrX(), scroller.getCurrY());
-            postInvalidate();
-    	}
+@Override
+public void computeScroll() {
+    if (scroller.computeScrollOffset()) {
+        scrollTo(scroller.getCurrX(), scroller.getCurrY());
+        postInvalidate();
     }
-  ```
+}
+```
+
    从中发现Scroller对象调用startScroll方法，该方法实现如下：
 
    ```
-    public void startScroll(int startX, int startY, int dx, int dy, int duration) {
-        mMode = SCROLL_MODE;
-    	mFinished = false;
-    	mDuration = duration;
-    	mStartTime = AnimationUtils.currentAnimationTimeMillis();
-    	mStartX = startX;
-    	mStartY = startY;
-    	mFinalX = startX + dx;
-    	mFinalY = startY + dy;
-    	mDeltaX = dx;
-    	mDeltaY = dy;
-    	mDurationReciprocal = 1.0f / (float) mDuration;
-    }
+public void startScroll(int startX, int startY, int dx, int dy, int duration) {
+    mMode = SCROLL_MODE;
+    mFinished = false;
+    mDuration = duration;
+    mStartTime = AnimationUtils.currentAnimationTimeMillis();
+    mStartX = startX;
+    mStartY = startY;
+    mFinalX = startX + dx;
+    mFinalY = startY + dy;
+    mDeltaX = dx;
+    mDeltaY = dy;
+    mDurationReciprocal = 1.0f / (float) mDuration;
+}
    ```
 
    可以看到最终的位置是在开始的位置上加滑动的距离，即startX和startY是滑动的起点坐标，dx和dy表示滑动的距离，duration表示滑动的时间，Scroller本身并不能实现那View的滑动，需要配合View的computeScroll使用。**使用时调用invalidate方法导致View重绘，在View的draw方法中会调用computeScroll方法，computeScroll方法在View中是一个空实现，我们需要如上面那样去实现此方法获取当前的scrollX和scrollY，然后通过scrollTo实现滑动，接着又调用postInvalidate方法进行第二次重绘，如此重复直到滑动结束**。  
