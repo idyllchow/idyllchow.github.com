@@ -3,7 +3,7 @@ layout: post
 title: 观察者模式实现TextView实时更新
 description: "观察者模式实现TextView实时更新"
 modified: 2016-07-14
-categories: [android]
+categories: [Android]
 type: dev
 ---
 
