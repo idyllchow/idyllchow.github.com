@@ -42,6 +42,9 @@ y = top + translationY
 
 *    使用scrollTo/scrollBy
      这两个方法的源码如下： 
+
+     ​
+
      ```
      /**
       * Set the scrolled position of your view. This will cause a call to
@@ -75,6 +78,8 @@ y = top + translationY
          scrollTo(mScrollX + x, mScrollY + y);
      }
      ```
+     ​
+
      其中，mScrollX为View内容左边缘与View左边缘在水平方向的距离，mScrollY为View内容上边缘与View上边缘在竖直方向上的距离，其取值正负如图所示。scrollBy也是调用scrollTo方法，它改变的是View内容位置而不是View本身位置。
 
   ![View Image]({{ site.url }}/images/android_post/android_view_position.png)
@@ -88,19 +93,25 @@ y = top + translationY
 
   改变LayoutParams，可以有两种方式实现，一是改变View的margin值，二是在View旁边增加空白View，通过改变View的宽高让View实现滑动。改变margin值实现滑动例：
 
+  ​
+
 ```
-ImageView imgTest = (ImageView) findViewById(R.id.img_test);
-ViewGroup.MarginLayoutParams params = (ViewGroup.MarginLayoutParams) imgTest.getLayoutParams();
-params.width += 150;
-params.leftMargin += 150;
-imgTest.requestLayout();
+    ImageView imgTest = (ImageView) findViewById(R.id.img_test);
+    ViewGroup.MarginLayoutParams params = (ViewGroup.MarginLayoutParams)         	imgTest.getLayoutParams();
+	params.width += 150;
+	params.leftMargin += 150;
+	imgTest.requestLayout();
 ```
+
+
 
 上文所述的View滑动都是在瞬时完成，要提升用户体验，需要动画是渐进式的，也就是把一次大的滑动拆分成若干次小的滑动，在一段时间内完成。通常可以有使用Scroller、使用动画、使用延时策略三种方式，下面分别说明。
 
 1. 使用Scroller
 
-   Scroller即弹性滑动对象，通常Scroller的用法如下：    
+   Scroller即弹性滑动对象，通常Scroller的用法如下：
+
+      
 
 
     Scroller scroller = new Scroller(mContext);
@@ -118,6 +129,8 @@ imgTest.requestLayout();
         postInvalidate();
     	}
     }
+
+
 从中发现Scroller对象调用startScroll方法，该方法实现如下：
 
 ```
@@ -151,7 +164,8 @@ public void startScroll(int startX, int startY, int dx, int dy, int duration) {
 
 #### View 的绘制
 
-有机的展示视图定然离不开视图管理和呈现，这两部分工作分别对应于WindowManager和DecorView，两者又是如何关联的呢？答案是通过ViewRoot。Activity本身并不和视图控制相关，只控制生命周期和事件的处理，真正控制的视图控制者是Window，在ActivityThread中，Activity对象被创建后，会将DecorView添加到Window中，并创建ViewRootImpl对象，将ViewRootImpl对象和DecorView对象建立关联，过程实现在WindowManagerGlobal类的addView方法中：
+有机的展示视图定然离不开视图管理和呈现，这两部分工作分别对应于WindowManager和DecorView，两者又是如何关联的呢？答案是通过ViewRoot。Activity本身并不和视图控制相关，只控制生命周期和事件的处理，真正控制的视图控制者是Window，在ActivityThread中，Activity对象被创建后，会将DecorView添加到Window中，并创建ViewRootImpl对象，将ViewRootImpl对象和DecorView对象建立关联，过程实现在WindowManagerGlobal类的addView方法中：  
+
 ```
 root = new ViewRootImpl(view.getContext(), display);
 view.setLayoutParams(wparams);
@@ -160,6 +174,8 @@ mRoots.add(root);
 mParams.add(wparams);
 root.setView(view, wparams, panelParentView);
 ```
+
+
 
 View的绘制从ViewRootImpl的performTraversals方法开始，经过measure（测量View的宽高）、layout（确定View在父容器中的位置）、draw（绘制）三个阶段，首先依次调用performMeasure、performLayout、performDraw方法完成顶层View的measure、layout、draw。在performMeasure中调用measure方法，其中onMeasure会对所有子元素进行measure，接着子元素会重复父容器的measure过程以完成View树的遍历，其它两个过程与之类似，performLayout过程通过layout实现，performDraw的传递过程在draw方法中的dispatchOnDraw实现。
 
@@ -170,7 +186,7 @@ DecorView是顶级的FrameLayout View，它是一个竖直摆放的LinearLayout�
 
 ###### View measure
 
-在View的measure中，有个至关重要的概念是MeasureSpec，它决定了View的尺寸规格，当然View的尺寸规格还会受到父容器的影响，系统会将View的LayoutParams根据父容器所施加的规则转换成对应的MeasureSpec，测量出View的宽、高。MeasureSpec的核心方法如下：
+在View的measure中，有个至关重要的概念是MeasureSpec，它决定了View的尺寸规格，当然View的尺寸规格还会受到父容器的影响，系统会将View的LayoutParams根据父容器所施加的规则转换成对应的MeasureSpec，测量出View的宽、高。MeasureSpec的核心方法如下：  
 
    ```
 private static final int MODE_SHIFT = 30;
@@ -203,6 +219,8 @@ public static int getSize(int measureSpec) {
 }
    ```
 
+
+
 MeasureSpec代表一个32位的int值，高2位代表测量模式SpecMode，低30位代表规格大小SpecSize，SpecMode有3类，分别是：
 
 * UNSPECIFIED
@@ -221,7 +239,7 @@ View测量的时候，系统会将LayoutParams在父容器的约束下转换成�
 
 DecorView:
 
-ViewRootImpl中的measureHierarchy方法确定了DecorView的MeasureSpec创建过程，它会调用getRootMeasureSpec方法如下：
+ViewRootImpl中的measureHierarchy方法确定了DecorView的MeasureSpec创建过程，它会调用getRootMeasureSpec方法如下：  
 
    ```
 private static int getRootMeasureSpec(int windowSize, int rootDimension) {
@@ -244,11 +262,13 @@ private static int getRootMeasureSpec(int windowSize, int rootDimension) {
 }
    ```
 
+  
+
 由以上代码可见，如果是LayoutParams.MATCH_PARENT模式，DecorView的大小就是窗口的大小，如果是LayoutParams.WRAP_CONTENT模式，DecorView采用最大模式，最大值不能超过窗口大小，默认情况下Decor大小位固定大小，其值为LayoutParams中指定的大小（如100dp）。
 
 布局中的普通View：
 
-View的measure过程由ViewGroup完成，其对应的方法为measureChildWithMargins，如下：
+View的measure过程由ViewGroup完成，其对应的方法为measureChildWithMargins，如下：  
 
 ```
 protected void measureChildWithMargins(View child,
@@ -267,7 +287,9 @@ protected void measureChildWithMargins(View child,
 }
 ```
 
-不难发现，在调用子元素的measure方法之前，先调用了getChildMeasureSpec方法得到子元素的MeasureSpec，并且这一值的得出和父容器的MeasureSpec、View的margin、View的padding相关，getChildMeasureSpec确定了View的大小，源码如下：
+
+
+不难发现，在调用子元素的measure方法之前，先调用了getChildMeasureSpec方法得到子元素的MeasureSpec，并且这一值的得出和父容器的MeasureSpec、View的margin、View的padding相关，getChildMeasureSpec确定了View的大小，源码如下：  
 
 ```
 public static int getChildMeasureSpec(int spec, int padding, int childDimension) {
@@ -335,9 +357,11 @@ public static int getChildMeasureSpec(int spec, int padding, int childDimension)
 }
 ```
 
+
+
 当View采用固定宽高时，View的MeasureSpec不受父容器的MeasureSpec影响，始终是EXACTLY（精确模式）；当View的宽高是MATCH_PARENT时，如果父容器的模式是EXACTLY，View也是EXACTLY，并且大小是父容器的剩余空间，如果父容器的模式是AL_AMOST（最大模式），那么View也是最大模式且不超过父容器剩余空间；当View的宽高采用wrap_content时，无论父容器的模式是EXACTLY（精确模式）还是ATMOST（最大模式），View的模式都是AL_MOST（最大模式）且大小不会超过父容器的剩余空间。  
 
-View的measure过程由measure方法调用onMeasure方法完成，onMeasure方法如下：
+View的measure过程由measure方法调用onMeasure方法完成，onMeasure方法如下：  
 
 ```
 protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
@@ -346,7 +370,9 @@ protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
 }
 ```
 
-其中调用的getDefaultSize如下：
+
+
+其中调用的getDefaultSize如下：  
 
 ```
 public static int getDefaultSize(int size, int measureSpec) {
@@ -864,7 +890,10 @@ public void setOnLongClickListener(@Nullable OnLongClickListener l) {
 
 ##### 继承自View  
 
-继承自View的情况一般用在需要实现一些系统没有的形状效果，或是在系统已有View的基础上增加其它属性，此时一般需要复写onDraw方法，如果直接集成View，需要对wrap_content、padding做处理，如果继承自系统派生的如ImageView之类的View，则不需要对wrap_content、padding做处理（通过前面的分析，这也很好理解，查看ImageView的源码，也能发现其onMeasure和onDraw方法已对相应情况作了处理）。要想在布局中使用自定义View时wrap_content生效，需要在onMeasure中对MeasureSpec和MeasureMode处理，再调用setMeasuredDimension方法，要想使用时padding生效，则需要在onDraw中对paddingLeft、paddingTop、paddingRight、paddingBottm做处理。如下例：
+继承自View的情况一般用在需要实现一些系统没有的形状效果，或是在系统已有View的基础上增加其它属性，此时一般需要复写onDraw方法，如果直接集成View，需要对wrap_content、padding做处理，如果继承自系统派生的如ImageView之类的View，则不需要对wrap_content、padding做处理（通过前面的分析，这也很好理解，查看ImageView的源码，也能发现其onMeasure和onDraw方法已对相应情况作了处理）。要想在布局中使用自定义View时wrap_content生效，需要在onMeasure中对MeasureSpec和MeasureMode处理，再调用setMeasuredDimension方法，要想使用时padding生效，则需要在onDraw中对paddingLeft、paddingTop、paddingRight、paddingBottm做处理。如下例：  
+
+
+
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
     	super.onMeasure(widthMeasureSpec , heightMeasureSpec);
@@ -892,6 +921,8 @@ public void setOnLongClickListener(@Nullable OnLongClickListener l) {
     	canvas.drawColor(Color.GRAY);
     	canvas.drawCircle(width / 2, height / 2, radius, mPaint);
     }
+
+
 
 ##### 继承自ViewGroup  
 
