@@ -7,16 +7,16 @@ categories: [Android View]
 type: dev
 ---
 
-android.view.View类呈现最基本的UI构造块。一个View（视图）占据屏幕上的一个方形区域，是与用户交互的直接所在，负责绘制和事件处理。![View Image]({{ site.url }}/images/android_post/android_view.png)
-{: .image-right}
-Android中的UI元素常常在Layout中进行描述，android.view.View的其中一个重要扩展者是android.view.ViewGroup，它表示一个View的集合，其中可以包含众多子View，其本身也是一个View。View用@UiThread来注解，表明其工作在UI线程(app主线程)中，调用所有与之相关的方法应在主线程中。(android中所有的应用组件(Activities, Services, ContentProviders, BroadcastReceivers)在UI线程中被创建)，下文分别从View的位置，滑动，绘制，事件机制，自定义等几个方面加以分析，希望能有一个直观清楚的梳理。  
+android.view.View类呈现最基本的UI构造块。一个View（视图）占据屏幕上的一个方形区域，是与用户交互的直接所在，负责绘制和事件处理。  ![View Image]({{ site.url }}/images/android_post/android_view.png)
+{: .image-right}  
+Android中的UI元素常常在Layout中进行描述，android.view.View的其中一个重要扩展者是android.view.ViewGroup，它表示一个View的集合，其中可以包含众多子View，其本身也是一个View。View用@UiThread来注解，表明其工作在UI线程(app主线程)中，调用所有与之相关的方法应在主线程中。(android中所有的应用组件(Activities, Services, ContentProviders, BroadcastReceivers)在UI线程中被创建)，下文分别从View的位置，滑动，绘制，事件机制，自定义等几个方面加以分析，希望能有一个直观清楚的梳理。    
 
-<!-- more -->
+<!-- more -->  
 
 #### View 的位置  
 
 ![View Image]({{ site.url }}/images/android_post/android_view_position.png)
-{: .image-right}
+{: .image-right}  
 
 如图所示，View的位置由四个顶点决定，分别对应View的四个属性：left(左横坐标)、top(上纵坐标)、right(右横坐标)、bottom(下纵坐标)，其值分别由getLeft()、getTop()、getRight()、getBottom()获取，宽高和坐标的关系：
 
@@ -37,7 +37,8 @@ y = top + translationY
 滑动操作对Android应用的重要性不言而喻，通常可以通过以下3种方式实现View的滑动：
 
 *  使用scrollTo/scrollBy
-   这两个方法的源码如下：
+   这两个方法的源码如下： 
+
    ```
    /**
    * Set the scrolled position of your view. This will cause a call to
@@ -99,39 +100,39 @@ y = top + translationY
    Scroller即弹性滑动对象，通常Scroller的用法如下：
 
   ```
-Scroller scroller = new Scroller(mContext);
+    Scroller scroller = new Scroller(mContext);
 
-private void smoothScrollTo(int destX, int destY) {
-    int scrollX = getScrollX();
-    int delta = destX - scrollX;
-    scroller.startScroll(scrollX, 0, delta, 0, 1000);
-    invalidate();
-}
-
-@Override
-public void computeScroll() {
-    if (scroller.computeScrollOffset()) {
-        scrollTo(scroller.getCurrX(), scroller.getCurrY());
-        postInvalidate();
+    private void smoothScrollTo(int destX, int destY) {
+        int scrollX = getScrollX();
+    	int delta = destX - scrollX;
+    	scroller.startScroll(scrollX, 0, delta, 0, 1000);
+    	invalidate();
     }
-}
+
+    @Override
+    public void computeScroll() {
+    	if (scroller.computeScrollOffset()) {
+            scrollTo(scroller.getCurrX(), scroller.getCurrY());
+            postInvalidate();
+    	}
+    }
   ```
-从中发现Scroller对象调用startScroll方法，该方法实现如下：
+   从中发现Scroller对象调用startScroll方法，该方法实现如下：
 
    ```
-public void startScroll(int startX, int startY, int dx, int dy, int duration) {
-    mMode = SCROLL_MODE;
-    mFinished = false;
-    mDuration = duration;
-    mStartTime = AnimationUtils.currentAnimationTimeMillis();
-    mStartX = startX;
-    mStartY = startY;
-    mFinalX = startX + dx;
-    mFinalY = startY + dy;
-    mDeltaX = dx;
-    mDeltaY = dy;
-    mDurationReciprocal = 1.0f / (float) mDuration;
-}
+    public void startScroll(int startX, int startY, int dx, int dy, int duration) {
+        mMode = SCROLL_MODE;
+    	mFinished = false;
+    	mDuration = duration;
+    	mStartTime = AnimationUtils.currentAnimationTimeMillis();
+    	mStartX = startX;
+    	mStartY = startY;
+    	mFinalX = startX + dx;
+    	mFinalY = startY + dy;
+    	mDeltaX = dx;
+    	mDeltaY = dy;
+    	mDurationReciprocal = 1.0f / (float) mDuration;
+    }
    ```
 
    可以看到最终的位置是在开始的位置上加滑动的距离，即startX和startY是滑动的起点坐标，dx和dy表示滑动的距离，duration表示滑动的时间，Scroller本身并不能实现那View的滑动，需要配合View的computeScroll使用。**使用时调用invalidate方法导致View重绘，在View的draw方法中会调用computeScroll方法，computeScroll方法在View中是一个空实现，我们需要如上面那样去实现此方法获取当前的scrollX和scrollY，然后通过scrollTo实现滑动，接着又调用postInvalidate方法进行第二次重绘，如此重复直到滑动结束**。  
