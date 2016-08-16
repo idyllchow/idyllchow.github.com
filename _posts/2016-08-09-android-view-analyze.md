@@ -24,59 +24,58 @@ Android中的UI元素常常在Layout中进行描述，android.view.View的其中
 如图所示，View的位置由四个顶点决定，分别对应View的四个属性：left(左横坐标)、top(上纵坐标)、right(右横坐标)、bottom(下纵坐标)，其值分别由getLeft()、getTop()、getRight()、getBottom()获取，宽高和坐标的关系：
 
 {% highlight yaml %}
-​    width = right - left  
-​    height = bottom - top
+width = right - left  
+height = bottom - top
 {% endhighlight %}
 
 除此之外，View还有相对于父容器的几个值x(左上角横坐标), y(左上角纵坐标), translationX(View左上角相对于父容器的X方向偏移量), translationY(View左上角相对于父容器的Y方向偏移量)，对应关系为：  
 
 {% highlight yaml %}
-​    x = left + translationX  
-​    y = top + translationY
+x = left + translationX  
+
+y = top + translationY
 {% endhighlight %}
 
 #### View 的滑动  
 
 滑动操作对Android应用的重要性不言而喻，通常可以通过以下3种方式实现View的滑动：
 
-*  使用scrollTo/scrollBy
-   这两个方法的源码如下： 
-   ```
-      
-   /**
-   * Set the scrolled position of your view. This will cause a call to
-   * {@link #onScrollChanged(int, int, int, int)} and the view will be
-   * invalidated.
-   * @param x the x position to scroll to
-   * @param y the y position to scroll to
-   */
-   public void scrollTo(int x, int y) {
-      if (mScrollX != x || mScrollY != y) {
-          int oldX = mScrollX;
-          int oldY = mScrollY;
-          mScrollX = x;
-          mScrollY = y;
-          invalidateParentCaches();
-          onScrollChanged(mScrollX, mScrollY, oldX, oldY);
-          if (!awakenScrollBars()) {
-          	postInvalidateOnAnimation();
-          }
-   	}
-   }
+*    使用scrollTo/scrollBy
+     这两个方法的源码如下： 
+     ```
+     /**
+      * Set the scrolled position of your view. This will cause a call to
+      * {@link #onScrollChanged(int, int, int, int)} and the view will be
+      * invalidated.
+      * @param x the x position to scroll to
+      * @param y the y position to scroll to
+      */
+     public void scrollTo(int x, int y) {
+        if (mScrollX != x || mScrollY != y) {
+            int oldX = mScrollX;
+            int oldY = mScrollY;
+            mScrollX = x;
+            mScrollY = y;
+            invalidateParentCaches();
+            onScrollChanged(mScrollX, mScrollY, oldX, oldY);
+            if (!awakenScrollBars()) {
+            	postInvalidateOnAnimation();
+            }
+     	}
+     }
 
-   /**
-   * Move the scrolled position of your view. This will cause a call to
-   * {@link #onScrollChanged(int, int, int, int)} and the view will be
-   * invalidated.
-   * @param x the amount of pixels to scroll by horizontally
-   * @param y the amount of pixels to scroll by vertically
-   */
-   public void scrollBy(int x, int y) {
-       scrollTo(mScrollX + x, mScrollY + y);
-   }
-  ``` 
-
-其中，mScrollX为View内容左边缘与View左边缘在水平方向的距离，mScrollY为View内容上边缘与View上边缘在竖直方向上的距离，其取值正负如图所示。scrollBy也是调用scrollTo方法，它改变的是View内容位置而不是View本身位置。
+     /**
+      * Move the scrolled position of your view. This will cause a call to
+      * {@link #onScrollChanged(int, int, int, int)} and the view will be
+      * invalidated.
+      * @param x the amount of pixels to scroll by horizontally
+      * @param y the amount of pixels to scroll by vertically
+      */
+     public void scrollBy(int x, int y) {
+         scrollTo(mScrollX + x, mScrollY + y);
+     }
+     ```
+     其中，mScrollX为View内容左边缘与View左边缘在水平方向的距离，mScrollY为View内容上边缘与View上边缘在竖直方向上的距离，其取值正负如图所示。scrollBy也是调用scrollTo方法，它改变的是View内容位置而不是View本身位置。
 
   ![View Image]({{ site.url }}/images/android_post/android_view_position.png)
   {: .image-right}
@@ -88,58 +87,59 @@ Android中的UI元素常常在Layout中进行描述，android.view.View的其中
 * 改变布局参数
 
   改变LayoutParams，可以有两种方式实现，一是改变View的margin值，二是在View旁边增加空白View，通过改变View的宽高让View实现滑动。改变margin值实现滑动例：
-  ```
-  ImageView imgTest = (ImageView) findViewById(R.id.img_test);
-  ViewGroup.MarginLayoutParams params = (ViewGroup.MarginLayoutParams) imgTest.getLayoutParams();
-  params.width += 150;
-  params.leftMargin += 150;
-  imgTest.requestLayout();
-  ```
+
+```
+ImageView imgTest = (ImageView) findViewById(R.id.img_test);
+ViewGroup.MarginLayoutParams params = (ViewGroup.MarginLayoutParams) imgTest.getLayoutParams();
+params.width += 150;
+params.leftMargin += 150;
+imgTest.requestLayout();
+```
 
 上文所述的View滑动都是在瞬时完成，要提升用户体验，需要动画是渐进式的，也就是把一次大的滑动拆分成若干次小的滑动，在一段时间内完成。通常可以有使用Scroller、使用动画、使用延时策略三种方式，下面分别说明。
 
 1. 使用Scroller
 
-   Scroller即弹性滑动对象，通常Scroller的用法如下：
+   Scroller即弹性滑动对象，通常Scroller的用法如下：    
 
-```
-Scroller scroller = new Scroller(mContext);
 
-private void smoothScrollTo(int destX, int destY) {
-    int scrollX = getScrollX();
-    int delta = destX - scrollX;
-    scroller.startScroll(scrollX, 0, delta, 0, 1000);
-    invalidate();
-}
-
-@Override
-public void computeScroll() {
+    Scroller scroller = new Scroller(mContext);
+    private void smoothScrollTo(int destX, int destY) {
+    	int scrollX = getScrollX();
+    	int delta = destX - scrollX;
+    	scroller.startScroll(scrollX, 0, delta, 0, 1000);
+    	invalidate();
+    }
+    
+    @Override
+    public void computeScroll() {
     if (scroller.computeScrollOffset()) {
         scrollTo(scroller.getCurrX(), scroller.getCurrY());
         postInvalidate();
+    	}
     }
+从中发现Scroller对象调用startScroll方法，该方法实现如下：
+
+```
+public void startScroll(int startX, int startY, int dx, int dy, int duration) {
+	mMode = SCROLL_MODE;
+	mFinished = false;
+	mDuration = duration;
+	mStartTime = AnimationUtils.currentAnimationTimeMillis();
+	mStartX = startX;
+	mStartY = startY;
+	mFinalX = startX + dx;
+	mFinalY = startY + dy;
+	mDeltaX = dx;
+	mDeltaY = dy;
+	mDurationReciprocal = 1.0f / (float) mDuration;
 }
 ```
 
-   从中发现Scroller对象调用startScroll方法，该方法实现如下：
 
-   ```
-public void startScroll(int startX, int startY, int dx, int dy, int duration) {
-    mMode = SCROLL_MODE;
-    mFinished = false;
-    mDuration = duration;
-    mStartTime = AnimationUtils.currentAnimationTimeMillis();
-    mStartX = startX;
-    mStartY = startY;
-    mFinalX = startX + dx;
-    mFinalY = startY + dy;
-    mDeltaX = dx;
-    mDeltaY = dy;
-    mDurationReciprocal = 1.0f / (float) mDuration;
-}
-   ```
 
-   可以看到最终的位置是在开始的位置上加滑动的距离，即startX和startY是滑动的起点坐标，dx和dy表示滑动的距离，duration表示滑动的时间，Scroller本身并不能实现那View的滑动，需要配合View的computeScroll使用。**使用时调用invalidate方法导致View重绘，在View的draw方法中会调用computeScroll方法，computeScroll方法在View中是一个空实现，我们需要如上面那样去实现此方法获取当前的scrollX和scrollY，然后通过scrollTo实现滑动，接着又调用postInvalidate方法进行第二次重绘，如此重复直到滑动结束**。  
+
+可以看到最终的位置是在开始的位置上加滑动的距离，即startX和startY是滑动的起点坐标，dx和dy表示滑动的距离，duration表示滑动的时间，Scroller本身并不能实现那View的滑动，需要配合View的computeScroll使用。**使用时调用invalidate方法导致View重绘，在View的draw方法中会调用computeScroll方法，computeScroll方法在View中是一个空实现，我们需要如上面那样去实现此方法获取当前的scrollX和scrollY，然后通过scrollTo实现滑动，接着又调用postInvalidate方法进行第二次重绘，如此重复直到滑动结束**。  
 
 2. 使用动画
 
@@ -152,15 +152,14 @@ public void startScroll(int startX, int startY, int dx, int dy, int duration) {
 #### View 的绘制
 
 有机的展示视图定然离不开视图管理和呈现，这两部分工作分别对应于WindowManager和DecorView，两者又是如何关联的呢？答案是通过ViewRoot。Activity本身并不和视图控制相关，只控制生命周期和事件的处理，真正控制的视图控制者是Window，在ActivityThread中，Activity对象被创建后，会将DecorView添加到Window中，并创建ViewRootImpl对象，将ViewRootImpl对象和DecorView对象建立关联，过程实现在WindowManagerGlobal类的addView方法中：
-
-   ```
+```
 root = new ViewRootImpl(view.getContext(), display);
 view.setLayoutParams(wparams);
 mViews.add(view);
 mRoots.add(root);
 mParams.add(wparams);
 root.setView(view, wparams, panelParentView);
-   ```
+```
 
 View的绘制从ViewRootImpl的performTraversals方法开始，经过measure（测量View的宽高）、layout（确定View在父容器中的位置）、draw（绘制）三个阶段，首先依次调用performMeasure、performLayout、performDraw方法完成顶层View的measure、layout、draw。在performMeasure中调用measure方法，其中onMeasure会对所有子元素进行measure，接着子元素会重复父容器的measure过程以完成View树的遍历，其它两个过程与之类似，performLayout过程通过layout实现，performDraw的传递过程在draw方法中的dispatchOnDraw实现。
 
@@ -179,7 +178,7 @@ private static final int MODE_MASK  = 0x3 << MODE_SHIFT;
 public static final int UNSPECIFIED = 0 << MODE_SHIFT;
 public static final int EXACTLY     = 1 << MODE_SHIFT;
 public static final int AT_MOST     = 2 << MODE_SHIFT;
-        
+​        
 public static int makeMeasureSpec(int size, int mode) {
     if (sUseBrokenMakeMeasureSpec) {
         return size + mode;
@@ -224,7 +223,7 @@ DecorView:
 
 ViewRootImpl中的measureHierarchy方法确定了DecorView的MeasureSpec创建过程，它会调用getRootMeasureSpec方法如下：
 
-```
+   ```
 private static int getRootMeasureSpec(int windowSize, int rootDimension) {
     int measureSpec;
     switch (rootDimension) {
@@ -243,7 +242,7 @@ private static int getRootMeasureSpec(int windowSize, int rootDimension) {
     }
     return measureSpec;
 }
-```
+   ```
 
 由以上代码可见，如果是LayoutParams.MATCH_PARENT模式，DecorView的大小就是窗口的大小，如果是LayoutParams.WRAP_CONTENT模式，DecorView采用最大模式，最大值不能超过窗口大小，默认情况下Decor大小位固定大小，其值为LayoutParams中指定的大小（如100dp）。
 
@@ -866,36 +865,33 @@ public void setOnLongClickListener(@Nullable OnLongClickListener l) {
 ##### 继承自View  
 
 继承自View的情况一般用在需要实现一些系统没有的形状效果，或是在系统已有View的基础上增加其它属性，此时一般需要复写onDraw方法，如果直接集成View，需要对wrap_content、padding做处理，如果继承自系统派生的如ImageView之类的View，则不需要对wrap_content、padding做处理（通过前面的分析，这也很好理解，查看ImageView的源码，也能发现其onMeasure和onDraw方法已对相应情况作了处理）。要想在布局中使用自定义View时wrap_content生效，需要在onMeasure中对MeasureSpec和MeasureMode处理，再调用setMeasuredDimension方法，要想使用时padding生效，则需要在onDraw中对paddingLeft、paddingTop、paddingRight、paddingBottm做处理。如下例：
-
-```
-@Override
-protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-    super.onMeasure(widthMeasureSpec , heightMeasureSpec);
-    int widthSpecMode = MeasureSpec.getMode(widthMeasureSpec);
-    int widthSpceSize = MeasureSpec.getSize(widthMeasureSpec);
-    int heightSpecMode=MeasureSpec.getMode(heightMeasureSpec);
-    int heightSpceSize=MeasureSpec.getSize(heightMeasureSpec);
-
-    if(widthSpecMode==MeasureSpec.AT_MOST&&heightSpecMode==MeasureSpec.AT_MOST){
-        setMeasuredDimension(mWidth, mHeight);
-    }else if(widthSpecMode==MeasureSpec.AT_MOST){
-        setMeasuredDimension(mWidth, heightSpceSize);
-    }else if(heightSpecMode==MeasureSpec.AT_MOST){
-        setMeasuredDimension(widthSpceSize, mHeight);
+    @Override
+    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+    	super.onMeasure(widthMeasureSpec , heightMeasureSpec);
+    	int widthSpecMode = MeasureSpec.getMode(widthMeasureSpec);
+    	int widthSpceSize = MeasureSpec.getSize(widthMeasureSpec);
+    	int heightSpecMode=MeasureSpec.getMode(heightMeasureSpec);
+    	int heightSpceSize=MeasureSpec.getSize(heightMeasureSpec);
+    
+    	if(widthSpecMode==MeasureSpec.AT_MOST&&heightSpecMode==MeasureSpec.AT_MOST){
+        	setMeasuredDimension(mWidth, mHeight);
+    	}else if(widthSpecMode==MeasureSpec.AT_MOST){
+        	setMeasuredDimension(mWidth, heightSpceSize);
+    	}else if(heightSpecMode==MeasureSpec.AT_MOST){
+        	setMeasuredDimension(widthSpceSize, mHeight);
+    	}
     }
-}
-
-@Override
-protected void onDraw(Canvas canvas) {
-    super.onDraw(canvas);
-    int width = getWidth();
-    int height = getHeight();
-    int radius = Math.min((width - getPaddingLeft() - getPaddingRight()) / 2,
+    
+    @Override
+    protected void onDraw(Canvas canvas) {
+    	super.onDraw(canvas);
+    	int width = getWidth();
+    	int height = getHeight();
+    	int radius = Math.min((width - getPaddingLeft() - getPaddingRight()) / 2,
           (height - getPaddingTop() - getPaddingBottom()) / 2);
-    canvas.drawColor(Color.GRAY);
-    canvas.drawCircle(width / 2, height / 2, radius, mPaint);
-}
-```
+    	canvas.drawColor(Color.GRAY);
+    	canvas.drawCircle(width / 2, height / 2, radius, mPaint);
+    }
 
 ##### 继承自ViewGroup  
 
