@@ -41,9 +41,7 @@ y = top + translationY
 滑动操作对Android应用的重要性不言而喻，通常可以通过以下3种方式实现View的滑动：
 
 *    使用scrollTo/scrollBy
-     这两个方法的源码如下： 
-
-     ​
+     这两个方法的源码如下：   
 
      ```
      /**
@@ -78,11 +76,11 @@ y = top + translationY
          scrollTo(mScrollX + x, mScrollY + y);
      }
      ```
-     ​
+       
 
      其中，mScrollX为View内容左边缘与View左边缘在水平方向的距离，mScrollY为View内容上边缘与View上边缘在竖直方向上的距离，其取值正负如图所示。scrollBy也是调用scrollTo方法，它改变的是View内容位置而不是View本身位置。
 
-  ![View Image]({{ site.url }}/images/android_post/android_view_position.png)
+  ![View Image]({{ site.url }}/images/android_post/android_view_coordinate.png)
   {: .image-right}
 
 * 使用动画
@@ -111,7 +109,6 @@ y = top + translationY
 
    Scroller即弹性滑动对象，通常Scroller的用法如下：
 
-      
 
 
     Scroller scroller = new Scroller(mContext);
