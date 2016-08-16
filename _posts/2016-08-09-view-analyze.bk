@@ -2,14 +2,15 @@
 layout: post
 title: Android GUI 系统之View 分析
 description: "Android GUI 系统之View 分析"
-modified: 2016-08-16
-categories: [Android View]
+modified: 2016-06-13
+categories: [android]
 type: dev
 ---
 
-android.view.View类呈现最基本的UI构造块。一个View（视图）占据屏幕上的一个方形区域，是与用户交互的直接所在，负责绘制和事件处理。![View Image]({{ site.url }}/images/android_post/android_view.png)
+android.view.View类呈现最基本的UI构造块。一个View（视图）占据屏幕上的一个方形区域，是与用户交互的直接所在，负责绘制和事件处理。Android中的UI元素常常在Layout中进行描述，android.view.View的其中一个重要扩展者是android.view.ViewGroup，它表示一个View的集合，其中可以包含众多子View，其本身也是一个View。View用@UiThread来注解，表明其工作在UI线程(app主线程)中，调用所有与之相关的方法应在主线程中。(android中所有的应用组件(Activities, Services, ContentProviders, BroadcastReceivers)在UI线程中被创建)  
+
+![View Image]({{ site.url }}/images/android_post/android_view.png)
 {: .image-right}
-Android中的UI元素常常在Layout中进行描述，android.view.View的其中一个重要扩展者是android.view.ViewGroup，它表示一个View的集合，其中可以包含众多子View，其本身也是一个View。View用@UiThread来注解，表明其工作在UI线程(app主线程)中，调用所有与之相关的方法应在主线程中。(android中所有的应用组件(Activities, Services, ContentProviders, BroadcastReceivers)在UI线程中被创建)，下文分别从View的位置，滑动，绘制，事件机制，自定义等几个方面加以分析，希望能有一个直观清楚的梳理。  
 
 #### View 的位置  
 
@@ -35,7 +36,9 @@ y = top + translationY
 滑动操作对Android应用的重要性不言而喻，通常可以通过以下3种方式实现View的滑动：
 
 *  使用scrollTo/scrollBy
-   这两个方法的源码如下：
+
+   这两个方法的实现如下：
+
    ```
    /**
    * Set the scrolled position of your view. This will cause a call to
@@ -68,6 +71,7 @@ y = top + translationY
    public void scrollBy(int x, int y) {
        scrollTo(mScrollX + x, mScrollY + y);
    }
+
    ```
 
   其中，mScrollX为View内容左边缘与View左边缘在水平方向的距离，mScrollY为View内容上边缘与View上边缘在竖直方向上的距离，其取值正负如图所示。scrollBy也是调用scrollTo方法，它改变的是View内容位置而不是View本身位置。
@@ -114,7 +118,8 @@ public void computeScroll() {
     }
 }
   ```
-从中发现Scroller对象调用startScroll方法，该方法实现如下：
+
+   从中发现Scroller对象调用startScroll方法，该方法实现如下：
 
    ```
 public void startScroll(int startX, int startY, int dx, int dy, int duration) {
@@ -166,7 +171,7 @@ DecorView是顶级的FrameLayout View，它是一个竖直摆放的LinearLayout�
 
 在View的measure中，有个至关重要的概念是MeasureSpec，它决定了View的尺寸规格，当然View的尺寸规格还会受到父容器的影响，系统会将View的LayoutParams根据父容器所施加的规则转换成对应的MeasureSpec，测量出View的宽、高。MeasureSpec的核心方法如下：
 
-   ```
+```
 private static final int MODE_SHIFT = 30;
 private static final int MODE_MASK  = 0x3 << MODE_SHIFT;
 public static final int UNSPECIFIED = 0 << MODE_SHIFT;
@@ -195,7 +200,7 @@ public static int getMode(int measureSpec) {
 public static int getSize(int measureSpec) {
     return (measureSpec & ~MODE_MASK);
 }
-   ```
+```
 
 MeasureSpec代表一个32位的int值，高2位代表测量模式SpecMode，低30位代表规格大小SpecSize，SpecMode有3类，分别是：
 
@@ -892,6 +897,13 @@ protected void onDraw(Canvas canvas) {
 
 ##### 继承自ViewGroup  
 
-继承自ViewGroup需要处理ViewGroup的测量、布局，同时也需要考虑子元素的布局，可能会涉及到的方法有：onInterceptTouchEvent、onTouchEvent、onMeasure、onLayout等，不再详细说明。  
+#####  
 
-对于解决滑动冲突来说，把握的思想是根据场景或者滑动手势、角度确定当前需要滑动的方向，然后对事件拦截处理，父容器需要此事件就拦截，不需要此事件就不拦截（也可以不通过父容器而通过子元素判断，即父容器不拦截事件，所有事件交由子元素处理，子元素可以选择直接消费事件或者交给父容器处理，此方法需要配合getParent().requestDisallowInterceptTouchEvent方法使用），内存泄漏需要注意的是如果在自定义View中尽量用post而不是Handler来处理消息，如果有新启动的线程或者动画，最好是在onAttachedToWindow中启动，在onDetachedFromWindow中停止。
+
+
+除此之外，继承android.view.View的自定义视图也是基于2D图形API的实现OnDraw()的过程。
+
+
+```
+
+```

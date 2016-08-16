@@ -2,8 +2,8 @@
 layout: post
 title: Android GUI系统分析
 description: "Android GUI系统分析之整体架构"
-modified: 2016-06-13
-categories: [android]
+modified: 2016-08-16
+categories: [Android GUI]
 type: dev
 ---
 
@@ -61,12 +61,7 @@ Android的图形包android.graphics通过调用图形系统的JNI提供了对Jav
 * 绘制的内容(可能是Point、Rect、Path、text、Bitmap等)
 * paint(用来描述颜色和样式)
 
-Android中的UI元素也是通过调用Canvas类来构建的在View.java中，实现的是类android.view.View，通过建立这个Canvas类来构建绘画的基础。[Android Canvas详解](https://#)
-
-![View Image]({{ site.url }}/images/android_post/android_view.png)
-{: .image-right}
-
-android.view.View类呈现最基本的UI构造块。一个视图占据屏幕上的一个方形区域，并且负责绘制和事件处理。Android中的UI元素常常在Layout中进行描述，android.view.View的其中一个重要扩展者是android.view.ViewGroup，它表示一个View的集合，其中可以包含众多子View，本身也是一个View。除此之外，继承android.view.View的自定义视图也是基于2D图形API的实现OnDraw()的过程。
+Android中的UI元素也是通过调用Canvas类来构建在View.java中，实现的是类android.view.View，通过建立这个Canvas类来构建绘画的基础。关于View部分分析[Android GUI 系统之View 分析](https://zhoushibo.com/android/view-analyze/)，关于Canvas的分析[Android Canvas详解](https://#)
 
 #### OpenGL 3D图形系统
 
