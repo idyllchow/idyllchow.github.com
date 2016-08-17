@@ -23,18 +23,17 @@ Android中的UI元素常常在Layout中进行描述，android.view.View的其中
 
 如图所示，View的位置由四个顶点决定，分别对应View的四个属性：left(左横坐标)、top(上纵坐标)、right(右横坐标)、bottom(下纵坐标)，其值分别由getLeft()、getTop()、getRight()、getBottom()获取，宽高和坐标的关系：
 
-{% highlight yaml %}
+```
 width = right - left  
 height = bottom - top
-{% endhighlight %}
+```
 
 除此之外，View还有相对于父容器的几个值x(左上角横坐标), y(左上角纵坐标), translationX(View左上角相对于父容器的X方向偏移量), translationY(View左上角相对于父容器的Y方向偏移量)，对应关系为：  
 
-{% highlight yaml %}
+```
 x = left + translationX  
-
 y = top + translationY
-{% endhighlight %}
+```
 
 #### View 的滑动  
 
@@ -85,7 +84,7 @@ y = top + translationY
 
 * 使用动画
 
-  [Android 动画详解]()。
+  [Android 动画详解](https://zhoushibo.com/android/android-animation/)。
 
 * 改变布局参数
 
