@@ -3,7 +3,7 @@ layout: post
 title: Android GUI系统分析
 description: "Android GUI系统分析之整体架构"
 modified: 2016-08-16
-categories: [Android GUI]
+categories: [Android]
 type: dev
 ---
 

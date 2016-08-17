@@ -3,7 +3,7 @@ layout: post
 title: Android GUI 系统之View 分析
 description: "Android GUI 系统之View 分析"
 modified: 2016-08-16
-categories: [Android View]
+categories: [Android]
 type: dev
 ---
 
@@ -76,7 +76,7 @@ y = top + translationY
          scrollTo(mScrollX + x, mScrollY + y);
      }
      ```
-       
+     ​    
 
      其中，mScrollX为View内容左边缘与View左边缘在水平方向的距离，mScrollY为View内容上边缘与View上边缘在竖直方向上的距离，其取值正负如图所示。scrollBy也是调用scrollTo方法，它改变的是View内容位置而不是View本身位置。
 
@@ -94,11 +94,11 @@ y = top + translationY
   ​
 
 ```
-    ImageView imgTest = (ImageView) findViewById(R.id.img_test);
-    ViewGroup.MarginLayoutParams params = (ViewGroup.MarginLayoutParams)         	imgTest.getLayoutParams();
-	params.width += 150;
-	params.leftMargin += 150;
-	imgTest.requestLayout();
+ImageView imgTest = (ImageView) findViewById(R.id.img_test);
+ViewGroup.MarginLayoutParams params =(ViewGroup.MarginLayoutParams)imgTest.getLayoutParams();
+params.width += 150;
+params.leftMargin += 150;
+imgTest.requestLayout();
 ```
 
 
