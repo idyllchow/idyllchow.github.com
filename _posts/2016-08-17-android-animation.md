@@ -11,9 +11,7 @@ Android动画一共有三类，分别是View Animation(视图动画)、Drawable 
 
 - #### View Animation
 
-  View动画，也叫Tween（补间）动画，是指作用在View上的包括透明度、缩放、旋转，平移在内的4种效果，分别对应包android.view.animation下的AlphaAnimation、RotateAnimation、
-
-  ScaleAnimation、TranslateAnimation。可以用代码和xml两种方式定义，Android提供AnimationSet类来管理动画，相应的xml中动画对应的标签为`<set>`：  
+  View动画，也叫Tween（补间）动画，是指作用在View上的包括透明度、缩放、旋转，平移在内的4种效果，分别对应包android.view.animation下的AlphaAnimation、RotateAnimation、ScaleAnimation、TranslateAnimation。可以用代码和xml两种方式定义，Android提供AnimationSet类来管理动画，相应的xml中动画对应的标签为`<set>`：  
 
   <!-- more -->   
 
@@ -38,7 +36,9 @@ Android动画一共有三类，分别是View Animation(视图动画)、Drawable 
     - android:fromYDelta: y方向起始值
     - android:toYDelta: y方向结束值
 
-  上述属性也可用代码完成，通常对应相应的构造函数，如：  
+  上述属性也可用代码完成，通常对应相应的构造函数，如：
+
+    
 
   ```
   public AlphaAnimation(float fromAlpha, float toAlpha) {
