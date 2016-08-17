@@ -38,7 +38,8 @@ Android动画一共有三类，分别是View Animation(视图动画)、Drawable 
 
   上述属性也可用代码完成，通常对应相应的构造函数，如：
 
-    
+  ​
+
 
   ```
   public AlphaAnimation(float fromAlpha, float toAlpha) {
@@ -47,19 +48,19 @@ Android动画一共有三类，分别是View Animation(视图动画)、Drawable 
   }
   ```
 
-    
+​    
 
   此外，Animation及其子类AnimationSet还提供大量的属性可用于动画的设置，见下表：
 
-  | XML属性                | JAVA代码实现                          | 说明                                 |
-  | -------------------- | --------------------------------- | ---------------------------------- |
-  | android:fillAfter    | setFillAfter(boolean fillAfter)   | 动画结束时是否保持动画结束状态                    |
-  | android:fillBefore   | setFillBefore(boolean fillBefore) | 动画结束时是否保持动画开始状态                    |
-  | android:repeatMode   | setRepeatMode(int repeatMode)     | 动画重复方式，reverse表示倒序回放，restart表示从头播放 |
-  | android:startOffset  | setStartOffset(long startOffset)  | 动画延时开始时间值，默认为0                     |
-  | android:duration     | setDuration(long durationMillis)  | 动画持续时间                             |
-  | android:repeatCount  | setRepeatCount(int repeatCount)   | 动画重复次数                             |
-  | android:interpolator | setInterpolator(Interpolator i)   | 动画插值器，用来控制动画速度                     |
+| XML属性                | JAVA代码实现                          | 说明                                 |
+| -------------------- | --------------------------------- | ---------------------------------- |
+| android:fillAfter    | setFillAfter(boolean fillAfter)   | 动画结束时是否保持动画结束状态                    |
+| android:fillBefore   | setFillBefore(boolean fillBefore) | 动画结束时是否保持动画开始状态                    |
+| android:repeatMode   | setRepeatMode(int repeatMode)     | 动画重复方式，reverse表示倒序回放，restart表示从头播放 |
+| android:startOffset  | setStartOffset(long startOffset)  | 动画延时开始时间值，默认为0                     |
+| android:duration     | setDuration(long durationMillis)  | 动画持续时间                             |
+| android:repeatCount  | setRepeatCount(int repeatCount)   | 动画重复次数                             |
+| android:interpolator | setInterpolator(Interpolator i)   | 动画插值器，用来控制动画速度                     |
 
   View动画除了使用系统提供的上述4种动画外，也可以继承Animation，通过矩阵变换实现自定义动画，矩阵变换是自定义View动画的基础和重点，通常放在Animation的空方法applyTransformation中实现。
 

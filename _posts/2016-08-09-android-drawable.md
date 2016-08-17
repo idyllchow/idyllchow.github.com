@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Android GUI之Drawable
+title: Android GUI系统之Drawable
 description: "Android GUI分析之Drawable"
 modified: 2016-08-13
 categories: [Android]
