@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Android GUI系统分析
+title: Android GUI 系统之整体架构
 description: "Android GUI系统分析之整体架构"
 modified: 2016-08-16
 categories: [Android]

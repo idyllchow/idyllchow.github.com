@@ -1,7 +1,7 @@
 ---
 layout: post
-title: Android 动画详解
-description: "Android GUI分析之Animation"
+title: Android GUI 系统之Animation
+description: "Android GUI系统分析之Animation"
 modified: 2016-08-17
 categories: [Android]
 type: dev
