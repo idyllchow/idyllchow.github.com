@@ -36,21 +36,15 @@ Android动画一共有三类，分别是View Animation(视图动画)、Drawable 
     - android:fromYDelta: y方向起始值
     - android:toYDelta: y方向结束值
 
-  上述属性也可用代码完成，通常对应相应的构造函数，如：
+上述属性也可用代码完成，通常对应相应的构造函数，如： 
 
-  ​
-
-
-  ```
-  public AlphaAnimation(float fromAlpha, float toAlpha) {
-      mFromAlpha = fromAlpha;
-      mToAlpha = toAlpha;
-  }
-  ```
-
-​    
-
-  此外，Animation及其子类AnimationSet还提供大量的属性可用于动画的设置，见下表：
+```java
+public AlphaAnimation(float fromAlpha, float toAlpha) {
+    mFromAlpha = fromAlpha;
+    mToAlpha = toAlpha;
+}
+```
+此外，Animation及其子类AnimationSet还提供大量的属性可用于动画的设置，见下表：
 
 | XML属性                | JAVA代码实现                          | 说明                                 |
 | -------------------- | --------------------------------- | ---------------------------------- |
@@ -66,9 +60,9 @@ Android动画一共有三类，分别是View Animation(视图动画)、Drawable 
 
 - #### Drawable Animation
 
-  帧动画是顺序播放一组图片形成的动画效果，类似幻灯片，对应的xml标签为`</animation-list>`，其用法相对简单，如下例：
+  帧动画是顺序播放一组图片形成的动画效果，类似幻灯片，对应的xml标签为`</animation-list>`，其用法相对简单，如下例：  
 
-  ```
+```xml
   <?xml version="1.0" encoding="utf-8"?>
   <animation-list xmlns:android="http://schemas.android.com/apk/res/android"
       android:oneshot="false">
@@ -82,14 +76,15 @@ Android动画一共有三类，分别是View Animation(视图动画)、Drawable 
       <item android:drawable="@drawable/img4" android:duration="500" />
       
   </animation-list>
-  ```
+```
 
-  ```
-  TextView mTextView = (TextView) findViewById(R.id.tv);
-  mTextView.setBackgroundResource(R.drawable.drawable_animation);
-  AnimationDrawable animationDrawable = (AnimationDrawable) mTextView.getBackground();
-  animationDrawable.start();
-  ```
+```java
+//代码中调用
+TextView mTextView = (TextView) findViewById(R.id.tv);
+mTextView.setBackgroundResource(R.drawable.drawable_animation);
+AnimationDrawable animationDrawable = (AnimationDrawable) mTextView.getBackground();
+animationDrawable.start();
+```
 
 - #### Property Animation
 
@@ -112,38 +107,35 @@ Android动画一共有三类，分别是View Animation(视图动画)、Drawable 
 
   比如在某个View的属性动画采用了LinearInterpolator（线性插值器）和IntEvaluator（整型估值器），那么在动画的中间时间点该View的坐标改变就为0.5（因为此时的时间流逝百分比刚好时0.5，对线性插值器来说，它的坐标变换伴随时间是匀速的），此时它坐标的具体值变为多少了呢？就要通过估值器得出了，整型估值器源码如下：
 
-  ```
-  public class IntEvaluator implements TypeEvaluator<Integer> {
-      public Integer evaluate(float fraction, Integer startValue, Integer endValue) {
-          int startInt = startValue;
-          return (int)(startInt + fraction * (endValue - startInt));
-      }
-  }
-  ```
+```java
+public class IntEvaluator implements TypeEvaluator<Integer> {
+    public Integer evaluate(float fraction, Integer startValue, Integer endValue) {
+        int startInt = startValue;
+        return (int)(startInt + fraction * (endValue - startInt));
+    }
+}
+```
 
-  可见其左边改变刚好到0.5的位置。此外，属性动画还提供AnimatorUpdateListener、AnimatorListener两个监听器用于监听动画的播放过程。
+可见其左边改变刚好到0.5的位置。此外，属性动画还提供AnimatorUpdateListener、AnimatorListener两个监听器用于监听动画的播放过程。
 
-  ```
-  public static interface AnimatorListener {
-      void onAnimationStart(Animator animation);
-      void onAnimationEnd(Animator animation);
-      void onAnimationCancel(Animator animation);
-      void onAnimationRepeat(Animator animation);
-  }
+```java
+public static interface AnimatorListener {
+    void onAnimationStart(Animator animation);
+    void onAnimationEnd(Animator animation);
+    void onAnimationCancel(Animator animation);
+    void onAnimationRepeat(Animator animation);
+}
 
-  public static interface AnimatorUpdateListener {
-      void onAnimationUpdate(ValueAnimator animation);
-  }
-  ```
-
+public static interface AnimatorUpdateListener {
+    void onAnimationUpdate(ValueAnimator animation);
+}
+```
   利用这两个监听器，可以在动画过程中做其它处理。
-
   ObjectAnimator：ValueAnimator的子类，让动画属性作用在目标对象上，在实际中使用更多：
 
-  ```
+```java
   ObjectAnimator anim = ObjectAnimator.ofFloat(mObject, "alpha", 0f, 1f);
   anim.setDuration(1000);
   anim.start();
-  ```
-
+```
   TimeAnimator：为动画提供回调机制监听每一帧的动画对象，总运行时间，已运行时间。
