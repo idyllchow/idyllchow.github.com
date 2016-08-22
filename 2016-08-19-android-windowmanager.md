@@ -13,11 +13,7 @@ Android中View提供用户可见的视图，它们是怎么组织到一起的呢
 
 如同江湖是依赖于侠客的抽象存在一样，有View的地方就有Window，Window是一个抽象基类，PhoneWindow是其实现类，View依附于Window而存在，也就是说View的直接管理者是Window而非Activity、Dialog、Toast。那Window又是如何被创建的呢？拿Activity中Window的创建来说：
 
-
-
-<!-- more -->    
-
-
+<!-- more -->  
 
 Activity 的Window对象创建发生在attach方法
 
@@ -53,7 +49,7 @@ public interface Callback {
         public ActionMode onWindowStartingActionMode(ActionMode.Callback callback, int type);
         public void onActionModeStarted(ActionMode mode);
         public void onActionModeFinished(ActionMode mode);
-    }
+}
 ```
 
 不难发现我们平时对Activity的诸多操作都体现在这些回调之中。创建了Window之后，接下来看看View怎么附着在Window上的，在Activity的setContentView方法中：
