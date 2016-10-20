@@ -29,7 +29,7 @@ Android中Drawable可以用来作为图像显示或者作为View的背景，包�
 在需要圆形，圆角等图片时，除了可以自定义ImageView外，更简单高效的是自定义Drawable
 使用getIntrinsicHeight()，getIntrinsicWidth()可以返回drawable的固有高宽，setBounds(Rect)用来确定Drawable被绘制的大小，常见用法：
 
-```java
+{% highlight java %}
 public class RoundDrawable extends Drawable {
 
     private Paint mPaint;
@@ -72,7 +72,7 @@ public class RoundDrawable extends Drawable {
         rectF = new RectF(left, top, right, bottom);
     }
 }
-```
+{% endhighlight %}
 
 
 其中的PorterDuff提供了16种两图相交的模式，效果如下![Porterduff_mode Image]({{ site.url }}/images/android_image/porterduff_mode.png)

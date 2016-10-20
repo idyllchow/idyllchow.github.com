@@ -3,7 +3,8 @@ layout: post
 title: "苏东坡传"
 description: ""
 tags: [read]
-notes: [read]  
+notes: [read]
+categories: [Essay]  
 type: notes
 ---
 

@@ -21,14 +21,14 @@ Android中View提供用户可见的视图，它们是怎么组织到一起的呢
 
 Activity 的Window对象创建发生在attach方法
 
-```java
+{% highlight java %}
 mWindow = new PhoneWindow(this);
 mWindow.setCallback(this);
-```
+{% endhighlight %}
 
 此处设置的Callback是什么呢？
 
-```java
+{% highlight java %}
 public interface Callback {
         public boolean dispatchKeyEvent(KeyEvent event);
         public boolean dispatchKeyShortcutEvent(KeyEvent event);
@@ -54,20 +54,20 @@ public interface Callback {
         public void onActionModeStarted(ActionMode mode);
         public void onActionModeFinished(ActionMode mode);
     }
-```
+{% endhighlight %}
 
 不难发现我们平时对Activity的诸多操作都体现在这些回调之中。创建了Window之后，接下来看看View怎么附着在Window上的，在Activity的setContentView方法中：
 
-```java
+{% highlight java %}
 public void setContentView(@LayoutRes int layoutResID) {
     getWindow().setContentView(layoutResID);
     initWindowDecorActionBar(); //处理了根View的ActionBar
 }
-```
+{% endhighlight %}
 
 这里的具体操作交给了Window的具体实现类PhoneWindow，此处重载了几个setContentView方法：
 
-```java
+{% highlight java %}
 @Override
 public void setContentView(View view, ViewGroup.LayoutParams params) {
     // Note: FEATURE_CONTENT_TRANSITIONS may be set in the process of installing the window
@@ -92,11 +92,11 @@ public void setContentView(View view, ViewGroup.LayoutParams params) {
     cb.onContentChanged();
     }
 }
-```
+{% endhighlight %}
 
 可以看到，在PhoneWindow的setContentView方法中，如果放置DecorView及其子View的mContentParent为空，则先创建DecorView和mContentParent，分别通过下列方法：
 
-```java
+{% highlight java %}
 protected DecorView generateDecor() {
     return new DecorView(getContext(), -1);
 }
@@ -111,7 +111,7 @@ protected ViewGroup generateLayout(DecorView decor) {
     ......
     return contentParent;
 }      
-```
+{% endhighlight %}
 
 完成了DecorView中mContentParent的View添加后，将会回调onContentChanged方法通知Activity视图已发生改变。然后在ActivityThread中通过如下调用顺序被用户可见：handleResumeActivity->performResumeActivity->callActivityOnResume->onResume，handleResumeActivity中调用Activity的makeVisible方法设置mDecor可见。
 

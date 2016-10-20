@@ -18,16 +18,16 @@ type: dev
 ### 具体实现
 
 观察者接口
-
+{% highlight java %}
     public interface Observer {
         /**
          * 比赛状态改变时,主题会把当前进程状态值当作方法参数,传送给观察者
          */
         void update(Event event);
-	}
-
+    }
+{% endhighlight %}
 被观察者接口，这里我们用Subject命名
-
+{% highlight java %}
     public interface Subject {
         /**
          * 注册观察者
@@ -42,28 +42,27 @@ type: dev
          */
         void notifyObserver();
     }
-
+{% endhighlight %}
 显示元素接口
-
+{% highlight java %}
     public interface IDisplayElement {
-
         /**
          * 需要展示时,调用此方法
          */
     	void display();
-	}
-
+    }
+{% endhighlight %}
 具体被观察者类，其中用ArrayList存放观察者，event即具体的事件对象，每一次产生事件，通过set方法传进来
-
+{% highlight java %}
     public class EventDataImpl implements Subject {
         //存放观察者对象
         private ArrayList observers;
         private Event event;
-
+    
         public EventData() {
             observers = new ArrayList();
         }
-
+    
        	@Override
         public void registerObserver(Observer o) {
             if (o == null) {
@@ -72,7 +71,7 @@ type: dev
             //需要注册时添加
             observers.add(o);
         }
-
+    
         @Override
     	public void removeObserver(Observer o) {
         	if (o == null) {
@@ -84,7 +83,7 @@ type: dev
             	observers.remove(i);
         	}
     	}
-
+    
     	@Override
     	public void notifyObserver() {
         	//告诉每一个观察者
@@ -94,48 +93,48 @@ type: dev
             	o.update(event);
         	}
     	}
-
+    
     	/**
      	* 从源处得到更新的比赛进程时,通知观察者
      	*/
     	public void eventChanged() {
         	notifyObserver();
     	}
-
+    
     	public void setEvent(Event event) {
         	this.event = event;
         	eventChanged();
     	}
-	}
-
-接下来就是事件显示面板了
-
-	public class CurrentEventDisplayImpl implements Observer, IDisplayElement {
-    	private Event event;
-    	private String title;
-    	private TextView tv;
-
-    	public CurrentEventDisplay(Context context, Subject eventData, TextView tv) {
-        	this.context = context;
-        	this.tv = tv;
-        	eventData.registerObserver(this);
     }
-
-    	@Override
-    	public void display() {
-        	if (event != null) {
-        	    title = EventHelper.getEventDes(event);
-        	} else {
-           		title = "";
-        	}
-        	tv.setText(title);
-    	}
-
-    	@Override
-    	public void update(Event event) {
-        	this.event = event;
-        	display();
-    	}
+{% endhighlight %}
+接下来就是事件显示面板了
+{% highlight java %}
+	public class CurrentEventDisplayImpl implements Observer, IDisplayElement {
+		private Event event;
+		private String title;
+		private TextView tv;
+	
+		public CurrentEventDisplay(Context context, Subject eventData, TextView tv) {
+	    	this.context = context;
+	    	this.tv = tv;
+	    	eventData.registerObserver(this);
 	}
-
+	
+		@Override
+		public void display() {
+	    	if (event != null) {
+	    	    title = EventHelper.getEventDes(event);
+	    	} else {
+	       		title = "";
+	    	}
+	    	tv.setText(title);
+		}
+	
+		@Override
+		public void update(Event event) {
+	    	this.event = event;
+	    	display();
+		}
+	}
+{% endhighlight %}
 在需要有频繁更新textview的地方，完成CurrentEventDisplayImpl的初始化即可
