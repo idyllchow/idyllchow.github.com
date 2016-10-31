@@ -3,7 +3,7 @@ layout: post
 title: Android GUI 系统之Window,WindowManager
 description: "Android GUI分析之Window,WindowManager"
 modified: 2016-08-19
-categories: [Android]
+dev: [Android]
 type: dev
 ---
 

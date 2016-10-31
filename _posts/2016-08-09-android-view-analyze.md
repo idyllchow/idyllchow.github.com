@@ -3,7 +3,7 @@ layout: post
 title: Android GUI 系统之View
 description: "Android GUI系统之View"
 modified: 2016-08-16
-categories: [Android]
+dev: [Android]
 type: dev
 ---
 

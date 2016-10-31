@@ -2,7 +2,7 @@
 layout: post
 title: "Python搭建假接口网站bit-record"
 description: "通过Python搭建加接口网站，替代应用开发过程中的“写假接口”过程，提升开发效率，包括接口，用户，评论3部分"
-categories: [Python]
+dev: [Python]
 type: dev
 ---  
   
