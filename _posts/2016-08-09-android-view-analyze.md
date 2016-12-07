@@ -3,8 +3,8 @@ layout: post
 title: Android GUI 系统之View
 description: "Android GUI系统之View"
 modified: 2016-08-16
-dev: [Android]
 type: dev
+dev: [Android]
 ---
 
 android.view.View类呈现最基本的UI构造块。一个View（视图）占据屏幕上的一个方形区域，是与用户交互的直接所在，负责绘制和事件处理。 

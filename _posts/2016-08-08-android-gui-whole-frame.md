@@ -3,8 +3,8 @@ layout: post
 title: Android GUI 系统之整体架构
 description: "Android GUI系统分析之整体架构"
 modified: 2016-08-16
-dev: [Android]
 type: dev
+dev: [Android]
 ---
 
 Android的GUI系统由C语言框架和Java语言框架组成，C语言层通过调用输入设备和输出设备驱动将Android的软件系统和底层硬件联系起来，Java框架层提供各种绘图接口供上层应用调用。  
