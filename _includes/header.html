@@ -5,19 +5,20 @@
   </div>
   <div class="links">
   {% assign current = page.title %}
-  <a href="/" class="page-link{% if current == null %} active{% endif %}">最近文章</a>
-  <a href="/dev" class="page-link{% if current == null %} active{% endif %}">开发之路</a>
+  <!--<a href="/" class="page-link{% if current == null %} active{% endif %}">最近文章</a>
+ <a href="/dev" class="page-link{% if current == null %} active{% endif %}">开发之路</a>
   <a href="/notes" class="page-link{% if current == null %} active{% endif %}">八月十三</a>
   {% for page in site.pages %}
     {% if page.title and page.permalink != "/404.html" %}
       <a class="page-link{% if current == page.title %} active{% endif %}"
         href="{{ page.url | prepend: site.baseurl }}">{{ page.title }}</a>
     {% endif %}
-  {% endfor %}
+    {% endfor %} -->
   <!--a href="/feed.xml" target="_blank" class="page-link">RSS</a-->
-  <!--a href="https://zhoushibo.com" target="_blank" class="page-link">Datazenit</a-->
+  <!--a href="https://zhoushibo.com" target="_blank" class="page-link">Datazenit</a>
   <a href="http://twitter.com/idyllchow" target="_blank" class="page-link">Twitter</a>
   <a href="https://plus.google.com/u/2/101361252262377065320" target="_blank" class="page-link">Google+</a>
+  -->
   <a href="http://github.com/idyllchow/idyllchow.github.com"
     class="page-link github-link">
     <img src="/images/github-repo.png" alt="">
