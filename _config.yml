@@ -12,6 +12,16 @@ markdown: kramdown
 permalink: pretty
 excerpt_separator: "<!-- more -->"
 
+menu:
+  - title: '最近文章'
+    url: '/'
+  - title: 'Dev'
+    url: '/dev'
+    type: 'dev'
+  - title: '八月十三'
+    url: '/notes'
+
+        
 social:
   - title: "github"
     url: "https://github.com/idyllchow"
