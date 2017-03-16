@@ -7,8 +7,14 @@ type: dev
 dev: [web]
 ---
 
-面试以来抱怨的人居多，终于有点时间体验小程序了。
+[source](https://github.com/idyllchow/searchbook)
+
+面世以来抱怨的人居多，终于有点时间体验小程序了。
 首页包含一个搜索icon的输入框，调用api: “/v2/book/search”根据输入字段获取相应图书，list方式展示，点击跳转详情页面。
+[Search page]({{ site.url }}/images/wxapp/search.png)
+[Search result page]({{ site.url }}/images/wxapp/search_result.png)
+[Detail page]({{ site.url }}/images/wxapp/detail.png)
+总的来说感觉还可以，当然坑是难免的，比如编辑器、缓存等。
 ​   
 
 
