@@ -17,7 +17,7 @@ type: dev
 
 为了帮助我们看清每个模式的行为，我们使用简单的Tic-Tac-Toe游戏（译注：井字棋游戏，在3x3的棋盘上，双方轮流落子，先将3枚棋子连成一线的一方获得胜利）。
 
-demo源代码可以从[GitHub仓库](https://github.com/ericmaxwell2003/ticTacToe)获取，在代码中你可以check out当下阅读部分的分支（如`git checkout mvc`,`git checkout mvp`,`git checkout mvvm`)。
+demo源代码可以从[GitHub仓库](https://github.com/ericmaxwell2003/ticTacToe)获取，在代码中你可以check out当下阅读部分的分支（如git checkout mvc,git checkout mvp,git checkout mvvm)。
 
 ##### MVC
 
@@ -25,15 +25,15 @@ demo源代码可以从[GitHub仓库](https://github.com/ericmaxwell2003/ticTacTo
 
 ###### Model
 
-在我们的Tic-Tac-Toe应用中`model`层是指数据+状态+业务逻辑，它是我们应用的大脑，它不绑定到`view`或者`controller`，因为这个原因，它在许多上下文中是可重用的。
+在我们的Tic-Tac-Toe应用中model层是指数据+状态+业务逻辑，它是我们应用的大脑，它不绑定到view或者controller，因为这个原因，它在许多上下文中是可重用的。
 
 ###### view
 
-`view`是`Model`的表示，当用户与应用交互时，`view`负责呈现用户界面（UI）并与`controller`通信，在MVC结构中，`Views`通常是非常“无言的”，因为它们不知道底层模型，没有理解状态或当用户通过点击按钮，输入值等交户操作时做什么。这样的设计是基于它们知道的越少则模型的耦合越松散，因此它们改变会更灵活。
+view是Model的表示，当用户与应用交互时，view负责呈现用户界面（UI）并与controller通信，在MVC结构中，Views通常是非常“无言的”，因为它们不知道底层模型，没有理解状态或当用户通过点击按钮，输入值等交户操作时做什么。这样的设计是基于它们知道的越少则模型的耦合越松散，因此它们改变会更灵活。
 
 ###### Controller
 
-`controller`是把应用捆绑在一起的“胶”，它是应用程序中事件发生的主`controller`。当`View`告诉`controller`有用户点击按钮时，`controller`决定如何与`model`进行交互。基于`model`中的数据改变，`controller`可以决定适当的更新`view`状态，在此模式下的Android应用中，`controller`几乎总是相当于`Activity`或`Fragment`。
+controller是把应用捆绑在一起的“胶”，它是应用程序中事件发生的主controller。当View告诉controller有用户点击按钮时，controller决定如何与model进行交互。基于model中的数据改变，controller可以决定适当的更新view状态，在此模式下的Android应用中，controller几乎总是相当于Activity或Fragment。
 
 
 
@@ -41,7 +41,7 @@ demo源代码可以从[GitHub仓库](https://github.com/ericmaxwell2003/ticTacTo
 
 ![android mvc]({{ site.url }}/images/android_post/android_mvc.png)
 
-让我们更详细地检视`controller`。
+让我们更详细地检视controller。
 
 ```
 public class TicTacToeActivity extends AppCompatActivity {
@@ -135,13 +135,13 @@ public class TicTacToeActivity extends AppCompatActivity {
 
 ###### 评价
 
-MVC在分离`model`和`view`方面做得不够好，当然该模型可以轻松地测试，因为它不依赖于任何东西并且`view`在单元测试级别没有更多的测试。 然而`Controller`有一些问题。
+MVC在分离model和view方面做得不够好，当然该模型可以轻松地测试，因为它不依赖于任何东西并且view在单元测试级别没有更多的测试。 然而Controller有一些问题。
 
 ###### Controller的问题
 
-* 可测试性 - `Controller`与Android APIs紧密绑定因此很难进行单元测试。
-* 模块话&灵活性 - `Controller`与`views`紧耦合，它也可能是`view`的扩展，如果改变`view`，则不得不改变`controller`。
-* 维护 - 随着时间的推移，特别是在具有[anemic models](https://martinfowler.com/bliki/AnemicDomainModel.html)的应用中，越来越多的代码开始向`controllers`转移，使其膨胀和脆弱。
+* 可测试性 - Controller与Android APIs紧密绑定因此很难进行单元测试。
+* 模块话&灵活性 - Controller与views紧耦合，它也可能是view的扩展，如果改变view，则不得不改变controller。
+* 维护 - 随着时间的推移，特别是在具有[anemic models](https://martinfowler.com/bliki/AnemicDomainModel.html)的应用中，越来越多的代码开始向controllers转移，使其膨胀和脆弱。
 
 我们如何解决这些问题？MVP来了！
 
@@ -149,7 +149,7 @@ MVC在分离`model`和`view`方面做得不够好，当然该模型可以轻松�
 
 #### MVP
 
-MVP打破了`controller`，使得正常下`view／activity`耦合能够发生而不会影响其余的`“controller”`的职责，更多请见下文，但让我们从它和MVC的职责的常见定义对比开始。
+MVP打破了controller，使得正常下view／activity耦合能够发生而不会影响其余的“controller”的职责，更多请见下文，但让我们从它和MVC的职责的常见定义对比开始。
 
 ###### Model
 
@@ -157,17 +157,17 @@ MVP打破了`controller`，使得正常下`view／activity`耦合能够发生而
 
 ###### View
 
-唯一的变化是`Activity／Fragment`被认为是视图的一部分，一个好的实践方式是`Activity`实现一个`view`接口以便`presenter`有一个接口去完成，这样做消除了它耦合到任何特定的`view`，并允许对`view`的模拟实现进行简单的单元测试。
+唯一的变化是Activity／Fragment被认为是视图的一部分，一个好的实践方式是Activity实现一个view接口以便presenter有一个接口去完成，这样做消除了它耦合到任何特定的view，并允许对view的模拟实现进行简单的单元测试。
 
 ###### Presenter
 
-除了它只是一个接口而不绑定到`view`外，它本质上是来自于MVC的`controller`。它解决了我们MVC模式的可测试性以及模块化／灵活性问题。事实上，MVP理想主义者会认为`presenter`永远不应该有任何Android APIs或代码的引用。
+除了它只是一个接口而不绑定到view外，它本质上是来自于MVC的controller。它解决了我们MVC模式的可测试性以及模块化／灵活性问题。事实上，MVP理想主义者会认为presenter永远不应该有任何Android APIs或代码的引用。
 
 让我们再一次检查该模式在我们应用中的实现图。
 
 ![android mvp]({{ site.url }}/images/android_post/android_mvp.png)
 
-下文展示更详细的`Presenter`，你将会注意到的第一件事是每一个`action`的意图都更简单和清楚，它只是告诉`view`要显示什么而非如何显示。
+下文展示更详细的Presenter，你将会注意到的第一件事是每一个action的意图都更简单和清楚，它只是告诉view要显示什么而非如何显示。
 
 ```
 public class TicTacToePresenter implements Presenter {
@@ -215,7 +215,7 @@ public class TicTacToePresenter implements Presenter {
 }
 ```
 
-我们创建一个`Activity`实现的接口去让它在不绑定`activity`到`presenter`的情况下工作。在这个测试中，我们激昂创建一个基于这个接口的模型去测试view和`presenter`的交互。
+我们创建一个Activity实现的接口去让它在不绑定activity到presenter的情况下工作。在这个测试中，我们激昂创建一个基于这个接口的模型去测试view和presenter的交互。
 
 ```
 public interface TicTacToeView {
@@ -362,17 +362,17 @@ public class TicTacToeViewModel implements ViewModel {
 </layout>
 ```
 
-*提示：在上文的例子中大量使用`tools`属性，用来进行显示的值和可见性设置。 如果你不设置这些，在设计时可能很难看到事实效果。*
+*提示：在上文的例子中大量使用tools属性，用来进行显示的值和可见性设置。 如果你不设置这些，在设计时可能很难看到事实效果。*
 
 *关于Android中数据绑定的附注， 这只是数据绑定技术的冰山一角。我强烈建议你查看[Android Data Binding](https://developer.android.com/topic/libraries/data-binding/index.html)的文档，以便学习更多这一强大的工具，本页底部还有一个链接，指向Google Android Architecture Blueprints项目页面，以便你了解更多的MVVM和数据绑定的例子*
 
 ###### 评价
 
-单元测试现在更容易了，因为你对`view`没有依赖性，测试时，你只需要验证在`model`更改时可观察的变量是否有对应的变化，没有必要模拟`view`测试。
+单元测试现在更容易了，因为你对view没有依赖性，测试时，你只需要验证在model更改时可观察的变量是否有对应的变化，没有必要模拟view测试。
 
 ###### MVVM的问题
 
-* 可维护性 - 由于`views`可以绑定到变量和表达式，无关的表示逻辑可能随着时间的推移使我们`XML`代码数量增加，要避免这种情况，请始终直接从`ViewModel`获取值，而不是尝试在views绑定表达式中计算或导出它们。 这样方式，计算可以被适当地单元测试。
+* 可维护性 - 由于views可以绑定到变量和表达式，无关的表示逻辑可能随着时间的推移使我们XML代码数量增加，要避免这种情况，请始终直接从ViewModel获取值，而不是尝试在views绑定表达式中计算或导出它们。 这样方式，计算可以被适当地单元测试。
 
 ##### 结论
 
