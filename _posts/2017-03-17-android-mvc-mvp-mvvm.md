@@ -43,7 +43,7 @@ controller是把应用捆绑在一起的“胶”，它是应用程序中事件�
 
 让我们更详细地检视controller。
 
-```
+{% highlight java %}
 public class TicTacToeActivity extends AppCompatActivity {
 
     private Board model;
@@ -52,7 +52,7 @@ public class TicTacToeActivity extends AppCompatActivity {
     private ViewGroup buttonGrid;
     private View winnerPlayerViewGroup;
     private TextView winnerPlayerLabel;
-
+    
     /**
      * In onCreate of the Activity we lookup & retain references to view components
      * and instantiate the model.
@@ -64,10 +64,10 @@ public class TicTacToeActivity extends AppCompatActivity {
         winnerPlayerLabel = (TextView) findViewById(R.id.winnerPlayerLabel);
         winnerPlayerViewGroup = findViewById(R.id.winnerPlayerViewGroup);
         buttonGrid = (ViewGroup) findViewById(R.id.buttonGrid);
-
+    
         model = new Board();
     }
-
+    
     /**
      * Here we inflate and attach our reset button in the menu.
      */
@@ -90,7 +90,7 @@ public class TicTacToeActivity extends AppCompatActivity {
                 return super.onOptionsItemSelected(item);
         }
     }
-
+    
     /**
      *  When the view tells us a cell is clicked in the tic tac toe board,
      *  this method will fire. We update the model and then interrogate it's state
@@ -98,14 +98,14 @@ public class TicTacToeActivity extends AppCompatActivity {
      *  to display this and otherwise mark the cell that was clicked.
      */
     public void onCellClicked(View v) {
-
+    
         Button button = (Button) v;
-
+    
         int row = Integer.valueOf(tag.substring(0,1));
         int col = Integer.valueOf(tag.substring(1,2));
-
+    
         Player playerThatMoved = model.mark(row, col);
-
+    
         if(playerThatMoved != null) {
             button.setText(playerThatMoved.toString());
             if (model.getWinner() != null) {
@@ -113,9 +113,9 @@ public class TicTacToeActivity extends AppCompatActivity {
                 winnerPlayerViewGroup.setVisibility(View.VISIBLE);
             }
         }
-
+    
     }
-
+    
     /**
      * On reset, we clear the winner label and hide it, then clear out each button.
      * We also tell the model to reset (restart) it's state.
@@ -123,15 +123,15 @@ public class TicTacToeActivity extends AppCompatActivity {
     private void reset() {
         winnerPlayerViewGroup.setVisibility(View.GONE);
         winnerPlayerLabel.setText("");
-
+    
         model.restart();
-
+    
         for( int i = 0; i < buttonGrid.getChildCount(); i++ ) {
             ((Button) buttonGrid.getChildAt(i)).setText("");
         }
     }
 }
-```
+{% endhighlight java %}
 
 ##### 评价
 
@@ -169,24 +169,24 @@ MVP打破了controller，使得正常下view／activity耦合能够发生而不�
 
 下文展示更详细的Presenter，你将会注意到的第一件事是每一个action的意图都更简单和清楚，它只是告诉view要显示什么而非如何显示。
 
-```
+{% highlight java %}
 public class TicTacToePresenter implements Presenter {
 
     private TicTacToeView view;
     private Board model;
-
+    
     public TicTacToePresenter(TicTacToeView view) {
         this.view = view;
         this.model = new Board();
     }
-
+    
     // Here we implement delegate methods for the standard Android Activity Lifecycle.
     // These methods are defined in the Presenter interface that we are implementing.
     public void onCreate() { model = new Board(); }
     public void onPause() { }
     public void onResume() { }
     public void onDestroy() { }
-
+    
     /** 
      * When the user selects a cell, our presenter only hears about
      * what was (row, col) pressed, it's up to the view now to determine that from
@@ -194,16 +194,16 @@ public class TicTacToePresenter implements Presenter {
      */
     public void onButtonSelected(int row, int col) {
         Player playerThatMoved = model.mark(row, col);
-
+    
         if(playerThatMoved != null) {
             view.setButtonText(row, col, playerThatMoved.toString());
-
+    
             if (model.getWinner() != null) {
                 view.showWinner(playerThatMoved.toString());
             }
         }
     }
-
+    
     /**
      *  When we need to reset, we just dictate what to do.
      */
@@ -213,18 +213,18 @@ public class TicTacToePresenter implements Presenter {
         model.restart();
     }
 }
-```
+{% endhighlight java %}
 
 我们创建一个Activity实现的接口去让它在不绑定activity到presenter的情况下工作。在这个测试中，我们激昂创建一个基于这个接口的模型去测试view和presenter的交互。
 
-```
+{% highlight java %}
 public interface TicTacToeView {
     void showWinner(String winningPlayerDisplayLabel);
     void clearWinnerDisplay();
     void clearButtons();
     void setButtonText(int row, int col, String text);
 }
-```
+{% endhighlight java %}
 
 #### 评价
 
@@ -260,7 +260,7 @@ ViewModel负责包装model和准备view需要的可观察数据，同时它还�
 
 让我们从ViewModel开始仔细看看一些变动的部分。
 
-```
+{% highlight java %}
 public class TicTacToeViewModel implements ViewModel {
 
     private Board model;
@@ -273,18 +273,18 @@ public class TicTacToeViewModel implements ViewModel {
      */
     public final ObservableArrayMap<String, String> cells = new ObservableArrayMap<>();
     public final ObservableField<String> winner = new ObservableField<>();
-
+    
     public TicTacToeViewModel() {
         model = new Board();
     }
-
+    
     // As with presenter, we implement standard lifecycle methods from the view
     // in case we need to do anything with our model during those events.
     public void onCreate() { }
     public void onPause() { }
     public void onResume() { }
     public void onDestroy() { }
-
+    
     /**
      * An Action, callable by the view.  This action will pass a message to the model
      * for the cell clicked and then update the observable fields with the current
@@ -296,7 +296,7 @@ public class TicTacToeViewModel implements ViewModel {
                                                      null : playerThatMoved.toString());
         winner.set(model.getWinner() == null ? null : model.getWinner().toString());
     }
-
+    
     /**
      * An Action, callable by the view.  This action will pass a message to the model
      * to restart and then clear the observable data in this ViewModel.
@@ -308,11 +308,11 @@ public class TicTacToeViewModel implements ViewModel {
     }
 
 }
-```
+{% endhighlight java %}
 
 下面这个view的片段展示变量和actions是如何被绑定的。
 
-```
+{% highlight java %}
 <!-- 
     With Data Binding, the root element is <layout>.  It contains 2 things.
     1. <data> - We define variables to which we wish to use in our binding expressions and 
@@ -322,7 +322,7 @@ public class TicTacToeViewModel implements ViewModel {
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto">
-
+    
     <!-- We will reference the TicTacToeViewModel by the name viewModel as we have defined it here. -->
     <data>
         <import type="android.view.View" />
@@ -342,7 +342,7 @@ public class TicTacToeViewModel implements ViewModel {
                 android:onClick="@{() -> viewModel.onClickedCellAt(2,2)}"
                 android:text='@{viewModel.cells["22"]}' />
         </GridLayout>
-
+    
         <!-- The visibility of the winner view group is based on whether or not the winner value is null.
              Caution should be used not to add presentation logic into the view.  However, for this case
              it makes sense to just set visibility accordingly.  It would be odd for the view to render
@@ -350,7 +350,7 @@ public class TicTacToeViewModel implements ViewModel {
         <LinearLayout...
             android:visibility="@{viewModel.winner != null ? View.VISIBLE : View.GONE}"
             tools:visibility="visible">
-
+    
             <!-- The value of the winner label is bound to the viewModel.winner and reacts if that value changes -->
             <TextView
                 ...
@@ -360,7 +360,7 @@ public class TicTacToeViewModel implements ViewModel {
         </LinearLayout>
     </LinearLayout>
 </layout>
-```
+{% endhighlight java %}
 
 *提示：在上文的例子中大量使用tools属性，用来进行显示的值和可见性设置。 如果你不设置这些，在设计时可能很难看到事实效果。*
 
