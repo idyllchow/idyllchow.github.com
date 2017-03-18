@@ -1,5 +1,5 @@
 ---
-layout: Android MVC MVP MVVM比较
+layout: post
 title: 翻译：Android MVC MVP MVVM比较
 description: "Android MVC MVP MVVM比较"
 modified: 2017-03-17
@@ -140,7 +140,7 @@ MVC在分离model和view方面做得不够好，当然该模型可以轻松地�
 ###### Controller的问题
 
 * 可测试性 - Controller与Android APIs紧密绑定因此很难进行单元测试。
-* 模块话&灵活性 - Controller与views紧耦合，它也可能是view的扩展，如果改变view，则不得不改变controller。
+* 模块化&灵活性 - Controller与views紧耦合，它也可能是view的扩展，如果改变view，则不得不改变controller。
 * 维护 - 随着时间的推移，特别是在具有[anemic models](https://martinfowler.com/bliki/AnemicDomainModel.html)的应用中，越来越多的代码开始向controllers转移，使其膨胀和脆弱。
 
 我们如何解决这些问题？MVP来了！
