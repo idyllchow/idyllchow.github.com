@@ -3,7 +3,7 @@ layout: post
 title: 翻译：Android MVC MVP MVVM比较
 description: "Android MVC MVP MVVM比较"
 modified: 2017-03-17
-dev: [Android,translation]
+dev: [Android]
 type: dev
 ---
 
@@ -381,88 +381,3 @@ MVP和MVVM在应用模块化，单一化组件方面比MVC做得更好，但是�
 那么哪一种模式更适合你？如果你在MVP和MVVM之间选择，很多决定来自个人偏好，但看到它们各自的形式将帮助你了解的它们的优势并作出权衡。
 
 如果你有兴趣看更多的MVP和MVVM在实践中的例子，我建议您查看[Google Architecture Blueprints](https://github.com/googlesamples/android-architecture)项目。 还有许多博客文章也都深入探讨正确的MVP实现方式。
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
