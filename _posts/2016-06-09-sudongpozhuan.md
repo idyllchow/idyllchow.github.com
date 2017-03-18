@@ -1,9 +1,7 @@
 ---
 layout: post
 title: "苏东坡传"
-description: ""
-tags: [read]
-notes: [read]
+description: "读后感"
 categories: [Essay]  
 type: notes
 ---

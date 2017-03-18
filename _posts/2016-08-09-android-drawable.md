@@ -4,7 +4,7 @@ title: Android GUI系统之Drawable
 description: "Android GUI分析之Drawable"
 modified: 2016-08-13
 type: dev
-dev: [Android]
+categories: [Android]
 ---
 
 Android中Drawable可以用来作为图像显示或者作为View的背景，包路径为android.graphics.drawable，Drawable是可绘制对象的图像的抽象，它不接受事件，无法与用户交互，一般通过XML定义，占用空间小，在实际开发中作用不可小觑。  

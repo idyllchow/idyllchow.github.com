@@ -2,7 +2,7 @@
  layout: post
  title: " 设计原则"
  description: ""
- tags: [notes]
+ categories: [Design]
  type: notes
 ---
 Robin设计4大原则

@@ -4,7 +4,7 @@ title: MPAndroidChart使用
 description: "MPAndroidChart使用心得"
 modified: 2017-03-15
 type: dev
-dev: [Android]
+categories: [Android]
 ---
 
 MPAndroidChart包含多种图表空控件。通用的属性方法包括：

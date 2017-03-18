@@ -1,8 +1,8 @@
 ---
  layout: post
  title: "欧洲杯观感"
- description: ""
- tags: [notes]
+ description: "随笔"
+ categories: [Essay]
  type: notes
 ---
 

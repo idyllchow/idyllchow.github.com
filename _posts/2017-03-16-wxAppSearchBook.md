@@ -4,7 +4,7 @@ title: 小程序搜书
 description: "从豆瓣api获取图书信息展示"
 modified: 2017-03-16
 type: dev
-dev: [web]
+categories: [Web]
 ---
 
 [source](https://github.com/idyllchow/searchbook)

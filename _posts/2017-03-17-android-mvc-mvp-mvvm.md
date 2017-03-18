@@ -3,7 +3,7 @@ layout: post
 title: 翻译：Android MVC MVP MVVM比较
 description: "Android MVC MVP MVVM比较"
 modified: 2017-03-17
-dev: [Android]
+categories: [Android]
 type: dev
 ---
 
