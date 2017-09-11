@@ -8,6 +8,9 @@ categories: [Android]
 ---
 
 MPAndroidChart包含多种图表空控件。通用的属性方法包括：
+
+<!-- more -->
+
 * setData() 给图表设置数据
 * clear() 清除图表控件中数据
 * drawMarker(Canvans canvans) 基于高亮点绘制标签视图

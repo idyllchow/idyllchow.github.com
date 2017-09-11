@@ -8,6 +8,9 @@ categories: [Android]
 ---
 
 Android的GUI系统由C语言框架和Java语言框架组成，C语言层通过调用输入设备和输出设备驱动将Android的软件系统和底层硬件联系起来，Java框架层提供各种绘图接口供上层应用调用。  
+
+<!-- more -->  
+
 ![android_gui]({{ site.url }}/images/android_post/android_gui.png)  
 
 ###### C语言部分包括:  
@@ -27,8 +30,6 @@ Android的GUI系统由C语言框架和Java语言框架组成，C语言层通过�
 * javax.microedition.khronos.opengles(标准的OpenGL接口)
 * android.opengl(Android系统和OpenGL的联系层)   
 
-<!-- more -->  
-
 #### pixelfinger
 
 pixelfinger是Android中一个下层的用C语言实现的工具类库，负责像素级别的基本处理:提供像素格式定义、画点、画线、画多边线、纹理颜色填充以及多层处理等操作接口。生成目标动态库libpixelflinger.so，它只连接了Android的C语言基础库libcutils。     
@@ -36,12 +37,12 @@ pixelfinger是Android中一个下层的用C语言实现的工具类库，负责�
 ######  libui
 
 libui库提供GUI系统本地部分框架。此库提供了一些接口，由其它的库通过类继承方式来实现，libui提供了包括：  
-  1. format(颜色格式，此部分本身定义颜色空间的枚举类型和数据结构)；  
-  2. Egl窗口(用于显示，实现一个本地显示的接口)；  
-  3. Key/Event(按键及事件处理，系统输入的基础，定义按键的映射，通过操作Event事件设备来实现获取系统的输入)；  
-  4. Surface(显示界面，定义显示界面较高层次的接口，包含部分显示界面的管理功能)；  
-  5. Overlay(显示叠加层接口，覆盖在主显示层之上，通常用于视频输出)；  
-  6. Camera(照相机接口，主要在CameraService部分实现)等多个方面的定义。      
+    1. format(颜色格式，此部分本身定义颜色空间的枚举类型和数据结构)；  
+    2. Egl窗口(用于显示，实现一个本地显示的接口)；  
+    3. Key/Event(按键及事件处理，系统输入的基础，定义按键的映射，通过操作Event事件设备来实现获取系统的输入)；  
+    4. Surface(显示界面，定义显示界面较高层次的接口，包含部分显示界面的管理功能)；  
+    5. Overlay(显示叠加层接口，覆盖在主显示层之上，通常用于视频输出)；  
+    6. Camera(照相机接口，主要在CameraService部分实现)等多个方面的定义。      
 
 #### SurfaceFlinger
 

@@ -9,6 +9,8 @@ categories: [Android]
 
 Android中Drawable可以用来作为图像显示或者作为View的背景，包路径为android.graphics.drawable，Drawable是可绘制对象的图像的抽象，它不接受事件，无法与用户交互，一般通过XML定义，占用空间小，在实际开发中作用不可小觑。  
 
+<!-- more -->
+
 ##### Drawable的种类  
 
 * Bitmap，简单常见的drawable,PNG或JPEG图片，对应xml标签<bitmap>
@@ -34,38 +36,38 @@ public class RoundDrawable extends Drawable {
 
     private Paint mPaint;
     private Bitmap mBitmap;
-
+    
     private RectF rectF;
-
+    
     public RoundDrawable(Bitmap bitmap) {
         mBitmap = bitmap;
         BitmapShader bitmapShader = new BitmapShader(bitmap, Shader.TileMode.CLAMP, Shader.TileMode.CLAMP);
         mPaint = new Paint();
         mPaint.setShader(bitmapShader);
     }
-
+    
     @Override
     public void draw(Canvas canvas) {
         canvas.drawRoundRect(rectF, 20, 20, mPaint);
     }
-
+    
     @Override
     public void setAlpha(int alpha) {
         mPaint.setAlpha(alpha);
         invalidateSelf();
     }
-
+    
     @Override
     public void setColorFilter(ColorFilter colorFilter) {
         mPaint.setColorFilter(colorFilter);
         invalidateSelf();
     }
-
+    
     @Override
     public int getOpacity() {
         return PixelFormat.TRANSLUCENT;
     }
-
+    
     @Override
     public void setBounds(int left, int top, int right, int bottom) {
         super.setBounds(left, top, right, bottom);

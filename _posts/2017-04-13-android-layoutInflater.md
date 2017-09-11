@@ -8,6 +8,9 @@ categories: [Android]
 ---
 
 LayoutInflater承载的功能是将一个布局文件实例化为对应的View对象，Inflater本身也有“充气”之意。对应的类LayoutInflater位于view包下，为抽象类。
+
+<!-- more -->
+
 获取标准的LayoutInflater实例可以通过Activity中的getLayoutInflater()或者Context中getSystemService()方法:
 {% highlight java %}
  LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE)
